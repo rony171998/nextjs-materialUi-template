@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { StyledEngineProvider } from '@mui/material';
 import { CustomizationStoreProvider } from '@/providers/customization-store-provider'
 import CustomThemeProvider from "./customThemeProvider";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "E-commerce App",
@@ -12,12 +13,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <StyledEngineProvider injectFirst>
             <CustomizationStoreProvider>
               <CustomThemeProvider>
-                {children}
+                <Suspense>{children}</Suspense>
               </CustomThemeProvider>
             </CustomizationStoreProvider>
           </StyledEngineProvider>

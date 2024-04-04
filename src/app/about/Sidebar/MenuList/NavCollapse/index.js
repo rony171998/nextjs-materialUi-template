@@ -14,22 +14,23 @@ import {
 } from "@mui/material";
 
 // project imports
-import NavItem from "../NavItem";
+import NavItem from "../NavItem/NavItem";
 
 // assets
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { useRouter } from "next/router";
 import { useCustomizationStore } from "@/providers/customization-store-provider";
+import { usePathname, useRouter } from "next/navigation";
 
 // ==============================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||============================== //
 
 const NavCollapse = ({ menu, level }) => {
     const theme = useTheme();
-    const customization = useCustomizationStore(state => {
+    const borderRadius = useCustomizationStore(state => {
         state.borderRadius;
     });
     const navigate = useRouter();
+    const pathname = usePathname();
 
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(null);
@@ -42,7 +43,6 @@ const NavCollapse = ({ menu, level }) => {
         }
     };
 
-    const { pathname } = navigate;
     const checkOpenForParent = (child, id) => {
         child.forEach(item => {
             if (item.url === pathname) {
@@ -115,7 +115,7 @@ const NavCollapse = ({ menu, level }) => {
         <>
             <ListItemButton
                 sx={{
-                    borderRadius: `${customization.borderRadius}px`,
+                    borderRadius: `${borderRadius}px`,
                     mb: 0.5,
                     alignItems: "flex-start",
                     backgroundColor:

@@ -1,8 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
 
-import { useRouter } from 'next/router';
-
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -38,12 +36,13 @@ import Transitions from '@/components/ui-component/extended/Transitions';
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
 import { useCustomizationStore } from '@/providers/customization-store-provider';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
   const theme = useTheme();
-  const customization = useCustomizationStore((state) => { state.borderRadius })
+  const borderRadius = useCustomizationStore((state) => { state.borderRadius })
   const navigate = useRouter();
 
   const [sdm, setSdm] = useState(true);
@@ -122,7 +121,7 @@ const ProfileSection = () => {
             color="inherit"
           >
             <Image
-              src='/assets/images/users/user-round.sgv'
+              src='/assets/images/users/user-round.svg'
               width={16}
               height={16}
               alt="avatar"
@@ -251,7 +250,7 @@ const ProfileSection = () => {
                         }}
                       >
                         <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
+                          sx={{ borderRadius: `${borderRadius}px` }}
                           selected={selectedIndex === 0}
                           onClick={(event) => handleListItemClick(event, 0, '#')}
                         >
@@ -261,7 +260,7 @@ const ProfileSection = () => {
                           <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                         </ListItemButton>
                         <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
+                          sx={{ borderRadius: `${borderRadius}px` }}
                           selected={selectedIndex === 1}
                           onClick={(event) => handleListItemClick(event, 1, '#')}
                         >
@@ -289,7 +288,7 @@ const ProfileSection = () => {
                           />
                         </ListItemButton>
                         <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
+                          sx={{ borderRadius: `${borderRadius}px` }}
                           selected={selectedIndex === 4}
                           onClick={handleLogout}
                         >

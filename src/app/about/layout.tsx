@@ -5,7 +5,7 @@ import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material'
 
 // project imports
 import Header from './Header/Header';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar/sidebar';
 import { drawerWidth } from '@/stores/constant';
 import { useCustomizationStore } from '@/providers/customization-store-provider';
 

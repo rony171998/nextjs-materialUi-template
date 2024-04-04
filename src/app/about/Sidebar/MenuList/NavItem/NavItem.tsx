@@ -18,17 +18,16 @@ import {
 
 // assets
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import { useRouter } from "next/router";
 import { useCustomizationStore } from "@/providers/customization-store-provider";
-
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 // ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
 const NavItem = ({ item, level }) => {
     const theme = useTheme();
-    const { pathname } = useRouter().pathname;
-    const customization = useCustomizationStore(state => {
-        state.borderRadius;
-    });
+    const pathname = usePathname();
+    const borderRadius = useCustomizationStore(state => state.borderRadius);
+    const isOpen = useCustomizationStore(state => state.isOpen);
     const setMenuOpen = useCustomizationStore(state => {
         state.setMenuOpen;
     });
@@ -43,14 +42,8 @@ const NavItem = ({ item, level }) => {
     ) : (
         <FiberManualRecordIcon
             sx={{
-                width:
-                    customization.isOpen.findIndex(id => id === item?.id) > -1
-                        ? 8
-                        : 6,
-                height:
-                    customization.isOpen.findIndex(id => id === item?.id) > -1
-                        ? 8
-                        : 6,
+                width: isOpen.findIndex(id => id === item?.id) > -1 ? 8 : 6,
+                height: isOpen.findIndex(id => id === item?.id) > -1 ? 8 : 6,
             }}
             fontSize={level > 0 ? "inherit" : "medium"}
         />
@@ -63,7 +56,7 @@ const NavItem = ({ item, level }) => {
 
     let listItemProps = {
         component: forwardRef((props, ref) => (
-            <link ref={ref} {...props} to={item.url} target={itemTarget} />
+            <Link ref={ref} {...props} href={item.url} target={itemTarget} />
         )),
     };
     if (item?.external) {
@@ -92,7 +85,7 @@ const NavItem = ({ item, level }) => {
             {...listItemProps}
             disabled={item.disabled}
             sx={{
-                borderRadius: `${customization.borderRadius}px`,
+                borderRadius: `${borderRadius}px`,
                 mb: 0.5,
                 alignItems: "flex-start",
                 backgroundColor:
@@ -100,7 +93,7 @@ const NavItem = ({ item, level }) => {
                 py: level > 1 ? 1 : 1.25,
                 pl: `${level * 24}px`,
             }}
-            selected={customization.isOpen.findIndex(id => id === item.id) > -1}
+            selected={isOpen.findIndex(id => id === item.id) > -1}
             onClick={() => itemHandler(item.id)}
         >
             <ListItemIcon sx={{ my: "auto", minWidth: !item?.icon ? 18 : 36 }}>
@@ -110,9 +103,7 @@ const NavItem = ({ item, level }) => {
                 primary={
                     <Typography
                         variant={
-                            customization.isOpen.findIndex(
-                                id => id === item.id
-                            ) > -1
+                            isOpen.findIndex(id => id === item.id) > -1
                                 ? "h5"
                                 : "body1"
                         }

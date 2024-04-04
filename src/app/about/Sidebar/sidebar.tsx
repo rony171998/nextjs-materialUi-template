@@ -1,3 +1,4 @@
+'use client'
 import PropTypes from "prop-types";
 
 // material-ui
@@ -14,13 +15,18 @@ import LogoSection from "../LogoSection";
 import MenuCard from "./MenuCard";
 import { drawerWidth } from "@/stores/constant";
 import MenuList from "./MenuList";
+import { useCustomizationStore } from "@/providers/customization-store-provider";
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
-const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
+const Sidebar = ({ window }) => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up("md"));
-
+    const drawerOpen = useCustomizationStore(state => state.opened);
+    const setOpenedMenu = useCustomizationStore(state => state.setMenu);
+    const drawerToggle = () => {
+        setOpenedMenu(!leftDrawerOpened);
+    };
     const drawer = (
         <>
             <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -39,7 +45,6 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
                         paddingRight: "16px",
                     }}
                 >
-                    {/* <NavGroup key={item.id} item={item} /> */}
                     <MenuList />
                 </PerfectScrollbar>
             </BrowserView>

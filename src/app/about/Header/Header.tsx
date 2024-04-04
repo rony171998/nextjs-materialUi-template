@@ -12,11 +12,17 @@ import NotificationSection from "./NotificationSection/NotificationSection";
 
 // assets
 import { IconMenu2 } from "@tabler/icons-react";
+import { useCustomizationStore } from "@/providers/customization-store-provider";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
-const Header = ({ handleLeftDrawerToggle }) => {
+const Header = () => {
     const theme = useTheme();
+    const leftDrawerOpened = useCustomizationStore((state) => state.opened)
+    const setOpenedMenu = useCustomizationStore((state) => state.setMenu)
+    const handleLeftDrawerToggle = () => {
+        setOpenedMenu(!leftDrawerOpened)
+    };
 
     return (
         <>

@@ -10,8 +10,8 @@ import { products } from '../../_mock/products';
 
 import ProductCard from '../product-card';
 import ProductSort from '../product-sort';
-import ProductFilters from '../product-filters';
 import ProductCartWidget from '../product-cart-widget';
+import ProductFilters from '../product-filters';
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +53,9 @@ export default function ProductsView() {
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
+            <ProductCard
+              product={product}
+            />
           </Grid>
         ))}
       </Grid>

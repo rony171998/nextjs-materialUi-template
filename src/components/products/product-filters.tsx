@@ -16,7 +16,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Iconify from '../iconify';
 import Scrollbar from '../scrollbar';
-import { ColorPicker } from '../color-utils/color-picker';
+import ColorPicker from '../color-utils/color-picker';
 
 // ----------------------------------------------------------------------
 
