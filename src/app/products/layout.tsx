@@ -1,14 +1,13 @@
 //'use client'
 // material-ui
-//import { useTheme } from '@mui/material/styles';
-import { AppBar, Box, Container, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
 
 // project imports
-import Header from '../../about/Header/Header';
-import Sidebar from '../../about/Sidebar/sidebar';
-import { drawerWidth } from '@/stores/constant';
-import { useCustomizationStore } from '@/providers/customization-store-provider';
 import { MainStyled } from '@/components/mainStyle';
+import Header from '../about/Header/Header';
+import Sidebar from '../about/Sidebar/sidebar';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import Error from '../error';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -36,14 +35,14 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       </AppBar>
 
       {/* drawer */}
-      {/* <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} /> */}
       <Sidebar />
 
       {/* main content */}
       {/* <Main theme={theme} open={leftDrawerOpened}> */}
       <MainStyled open={true}>
-        {props.children}
-        {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}
+        <ErrorBoundary fallback={<Error />}>
+          {props.children}
+        </ErrorBoundary>
       </MainStyled>
     </Box>
   );

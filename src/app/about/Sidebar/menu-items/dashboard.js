@@ -19,6 +19,14 @@ const dashboard = {
             icon: icons.IconDashboard,
             breadcrumbs: false,
         },
+        {
+            id: "default",
+            title: "products",
+            type: "item",
+            url: "/products",
+            icon: icons.IconDashboard,
+            breadcrumbs: false,
+        },
     ],
 };
 

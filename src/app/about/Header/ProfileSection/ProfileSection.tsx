@@ -37,6 +37,7 @@ import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-re
 import { useCustomizationStore } from '@/providers/customization-store-provider';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -295,7 +296,9 @@ const ProfileSection = () => {
                           <ListItemIcon>
                             <IconLogout stroke={1.5} size="1.3rem" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                          <Link href="/auth/login" >
+                            <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                          </Link>
                         </ListItemButton>
                       </List>
                     </Box>
