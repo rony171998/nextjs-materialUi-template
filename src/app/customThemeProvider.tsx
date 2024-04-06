@@ -15,7 +15,7 @@ export default function CustomThemeProvider({
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <ThemeProviderMui theme={themes(customization)}>
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
+                {/* <CssBaseline /> */}
                 {children}
             </ThemeProviderMui>
         </AppRouterCacheProvider>

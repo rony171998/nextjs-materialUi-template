@@ -80,11 +80,10 @@ const Sidebar = ({ window }) => {
                 flexShrink: { md: 0 },
                 width: matchUpMd ? drawerWidth : "auto",
             }}
-            aria-label="mailbox folders"
         >
             <Drawer
                 container={container}
-                variant={matchUpMd ? "persistent" : "temporary"}
+                variant={"persistent"}
                 anchor="left"
                 open={drawerOpen}
                 onClose={drawerToggle}
@@ -94,9 +93,7 @@ const Sidebar = ({ window }) => {
                         background: theme.palette.background.default,
                         color: theme.palette.text.primary,
                         borderRight: "none",
-                        [theme.breakpoints.up("md")]: {
-                            top: "88px",
-                        },
+                        top: "88px",
                     },
                 }}
                 ModalProps={{ keepMounted: true }}

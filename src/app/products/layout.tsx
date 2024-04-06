@@ -8,13 +8,11 @@ import Header from '../about/Header/Header';
 import Sidebar from '../about/Sidebar/sidebar';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Error from '../error';
+import { CardGlass, Glass } from '@/themes/glassStyle';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
-  //const theme = useTheme();
-  //const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
-  // Handle left drawer
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -24,10 +22,6 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
         position="fixed"
         color="inherit"
         elevation={0}
-        sx={{
-          //bgcolor: theme.palette.background.default,
-          //transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
-        }}
       >
         <Toolbar>
           <Header />
@@ -38,12 +32,15 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       <Sidebar />
 
       {/* main content */}
-      {/* <Main theme={theme} open={leftDrawerOpened}> */}
-      <MainStyled open={true}>
-        <ErrorBoundary fallback={<Error />}>
-          {props.children}
-        </ErrorBoundary>
-      </MainStyled>
+      <Glass>
+        <CardGlass>
+          {/* <MainStyled open={true}> */}
+          <ErrorBoundary fallback={<Error />}>
+            {props.children}
+          </ErrorBoundary>
+          {/* </MainStyled> */}
+        </CardGlass>
+      </Glass>
     </Box>
   );
 };

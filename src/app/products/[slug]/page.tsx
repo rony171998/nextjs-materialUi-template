@@ -14,6 +14,7 @@ import { SlideshowLightbox } from 'lightbox.js-react'
 
 import { Suspense, useState } from 'react';
 import StepperGallery from '@/components/products/StepperGallery';
+import RatingProduct from '@/components/products/Rating';
 
 export default function ProductPage() {
     const pathname = usePathname()
@@ -26,52 +27,25 @@ export default function ProductPage() {
         altText: imageProduct.name
     }))
     return (
-        <Box sx={{ mx: 'auto', maxWidth: '100%', px: 4 }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', lg: 'row' },
-                    borderRadius: 'lg',
-                    border: '1px solid #E2E8F0',
-                    backgroundColor: 'white',
-                    p: { xs: 8, md: 12 },
-                    gap: { lg: 8 },
-                    '& .dark': {
-                        borderColor: '#4B5563',
-                        backgroundColor: 'black',
-                    },
-                }}
-            >
-                <Box sx={{ flex: { xs: 'none', lg: '1 1 0%' }, width: 'full', lg: { flex: 'none' } }}>
-                    <Suspense
-                        fallback={
-                            <Box
-                                sx={{
-                                    position: 'relative',
-                                    aspectRatio: '1 / 1',
-                                    maxHeight: 450,
-                                    overflow: 'hidden',
-                                }}
-                            />
-                        }
-                    >
-                        <StepperGallery images={images} />
-                    </Suspense>
-                </Box>
+        <>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid item xs={6}>
+                    <StepperGallery images={images} />
+                </Grid>
+                <Grid item xs={6}>
+                    {product ?
+                        <ProductDescription product={product} />
+                        : null
+                    }
+                </Grid>
+            </Grid>
+            {/* <RelatedProducts relatedProducts={products} /> */}
+        </>
 
-                <Box sx={{ flex: { xs: 'none', lg: '1 1 0%' } }}>
-                    <ProductDescription product={product} />
-                </Box>
-            </Box>
-
-            <Suspense>
-                <RelatedProducts relatedProducts={products} />
-            </Suspense>
-        </Box>
     );
 }
 
-export function Gallery({ images }) {
+function Gallery({ images }) {
     console.log(images);
     const imageIndex = 0; // Actualizar según sea necesario
     const nextImageIndex = (imageIndex + 1) % images.length;
@@ -81,19 +55,6 @@ export function Gallery({ images }) {
 
     return (
         <Box>
-            {/* <SlideshowLightbox lightboxIdentifier="lightbox1" framework="next" images={images}>
-                    {images.map(image => (
-                        <Image
-                            src={image.src}
-                            alt={image.altText}
-                            height={500}
-                            width={500}
-                            data-lightboxjs="lightbox1"
-                            quality={80}
-                        />
-                    ))}
-                </SlideshowLightbox> */}
-
             <Box  >
 
                 {images[imageIndex] && (
@@ -123,9 +84,7 @@ export function Gallery({ images }) {
             ) : null}
 
             {images.length > 1 ? (
-                <ul
-                //className="my-12 flex items-center justify-center gap-2 overflow-auto py-1 lg:mb-0"
-                >
+                <ul >
                     <Stack direction={'row'}>
                         {images.map((image, index) => {
                             if (index > 5) return
@@ -223,7 +182,6 @@ function RelatedProducts({ relatedProducts }) {
 }
 
 function ProductDescription({ product }) {
-    const buttonClassName = 'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
 
     return (
         <>
@@ -231,22 +189,19 @@ function ProductDescription({ product }) {
                 <Typography variant="h1" sx={{ mb: 2, fontSize: '2.5rem', fontWeight: 'bold' }}>
                     {product.name}
                 </Typography>
-                <Box
+                {/* <RatingProduct /> */}
+                <Typography
+                    component="span"
+                    variant="body1"
                     sx={{
-                        display: 'inline-block',
-                        backgroundColor: '#3B82F6',
-                        borderRadius: 'full',
-                        p: 1,
-                        mr: 'auto',
-                        mb: 2,
-                        fontSize: '0.875rem',
-                        color: 'white',
+                        color: 'text.disabled',
+                        textDecoration: 'line-through',
                     }}
                 >
-                    {product.price}
-                </Box>
+                    {product.id}
+                </Typography>
             </Box>
-            <ColorPreview colors={product.colors} />
+            {/* <ColorPreview colors={product.colors} />
 
             <Typography variant="subtitle1">
                 <Typography
@@ -257,20 +212,18 @@ function ProductDescription({ product }) {
                         textDecoration: 'line-through',
                     }}
                 >
-                    {product.priceSale && fCurrency(product.priceSale)}
+                    {product.priceSale}
                 </Typography>
                 &nbsp;
-                {fCurrency(product.price)}
+                {product.price}
             </Typography>
 
-            <Suspense fallback={null}>
-                <Box sx={{ mt: 2 }}>
-                    <Button className={buttonClassName} variant='contained' sx={{ mr: 2 }}>
-                        Añadir al carrito
-                    </Button>
-                    <Button variant='outlined'>Comprar ahora</Button>
-                </Box>
-            </Suspense>
+            <Box sx={{ mt: 2 }}>
+                <Button variant='contained' sx={{ mr: 2 }}>
+                    Añadir al carrito
+                </Button>
+                <Button variant='outlined'>Comprar ahora</Button>
+            </Box> */}
         </>
     );
 }

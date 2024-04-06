@@ -7,7 +7,6 @@ import { drawerWidth } from '@/stores/constant';
 
 // styles
 export const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ open }) => ({
-    ...useTheme().typography.mainContent,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     transition: useTheme().transitions.create(
@@ -24,7 +23,7 @@ export const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !==
     ),
     [useTheme().breakpoints.up('md')]: {
         marginLeft: open ? 0 : -(drawerWidth - 20),
-        width: `calc(100% - ${drawerWidth}px)`
+        //width: `calc(100% - ${drawerWidth}px)`
     },
     [useTheme().breakpoints.down('md')]: {
         marginLeft: '20px',

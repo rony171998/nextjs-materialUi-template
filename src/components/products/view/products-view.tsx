@@ -12,6 +12,7 @@ import ProductCard from '../product-card';
 import ProductSort from '../product-sort';
 import ProductCartWidget from '../product-cart-widget';
 import ProductFilters from '../product-filters';
+import { Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ export default function ProductsView() {
   };
 
   return (
-    <Container>
+    <Box>
       <Stack
         direction="row"
         alignItems="center"
@@ -57,6 +58,6 @@ export default function ProductsView() {
       </Grid>
 
       <ProductCartWidget />
-    </Container>
+    </Box>
   );
 }

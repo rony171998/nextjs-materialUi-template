@@ -10,6 +10,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { autoPlay } from 'react-swipeable-views-utils-react-18-fix';
 import Image from 'next/image';
+import { Stack } from '@mui/material';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -72,12 +73,39 @@ function StepperGallery({ images }) {
                                     width={700}
                                     height={500}
                                     layout="responsive"
+                                    style={{ borderRadius: '15px' }}
                                 />
                             </Box>
                         ) : null}
                     </div>
-                ))}
+                )
+                )}
             </AutoPlaySwipeableViews>
+            <Stack direction={'row'} spacing={2} mt={3} justifyContent={'center'}>
+                {images.map((step, index) => {
+                    if (index > 4) return null; // Si quieres mostrar solo las primeras 5 imágenes
+                    const opacity = Math.max(0, 1 - Math.abs(activeStep - index) * 0.2); // Ajusta el factor multiplicador según lo desees
+                    return (
+                        <div key={step.altText}>
+                            <Box>
+                                <Image
+                                    src={step.src as string}
+                                    alt={step.altText as string}
+                                    width={80}
+                                    height={80}
+                                    style={{
+                                        borderRadius: '15px',
+                                        border: activeStep === index ? '2px solid green' : '',
+                                        opacity: opacity
+                                    }}
+                                />
+                            </Box>
+                        </div>
+                    );
+                })}
+            </Stack>
+
+
             <MobileStepper
                 steps={maxSteps}
                 position="static"
