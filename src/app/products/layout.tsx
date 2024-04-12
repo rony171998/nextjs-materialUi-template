@@ -34,11 +34,11 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       {/* main content */}
       <Glass>
         <CardGlass>
-          {/* <MainStyled open={true}> */}
-          <ErrorBoundary fallback={<Error />}>
-            {props.children}
-          </ErrorBoundary>
-          {/* </MainStyled> */}
+          <MainStyled open={true}>
+            <ErrorBoundary fallback={<Error />}>
+              {props.children}
+            </ErrorBoundary>
+          </MainStyled>
         </CardGlass>
       </Glass>
     </Box>

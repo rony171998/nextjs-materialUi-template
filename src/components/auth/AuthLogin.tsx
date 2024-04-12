@@ -36,6 +36,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Image from "next/image";
 import { useCustomizationStore } from '@/providers/customization-store-provider'
 import useAuthStore from '@/stores/userStorage';
+import { useRouter } from 'next/navigation';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -46,6 +47,7 @@ export const AuthLogin = ({ ...others }) => {
     const { borderRadius } = useCustomizationStore((state) => state)
     const [checked, setChecked] = useState(true);
     const { login } = useAuthStore();
+    const router = useRouter()
 
     const googleHandler = async () => {
         console.error('Login');
@@ -130,8 +132,8 @@ export const AuthLogin = ({ ...others }) => {
 
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
+                    email: 'JhonDoe@prueba.com',
+                    password: '123456789',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
@@ -144,6 +146,7 @@ export const AuthLogin = ({ ...others }) => {
                         await login(values);
                         setStatus({ success: true });
                         setSubmitting(false);
+                        router.push('/')
                     } catch (err) {
                         console.error(err);
                         setStatus({ success: false });

@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 type productsStore = {
-  products: Product[],
+  products: Product[] | [],
   fetchData: () => void,
 }
 

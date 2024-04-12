@@ -39,6 +39,7 @@ import Link from 'next/link';
 
 import { useCustomizationStore } from '@/providers/customization-store-provider'
 import useAuthStore from '@/stores/userStorage';
+import { useRouter } from 'next/navigation';
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 export const AuthRegister = ({ ...others }) => {
@@ -54,6 +55,7 @@ export const AuthRegister = ({ ...others }) => {
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
   const { signup } = useAuthStore();
+  const router = useRouter()
 
   const googleHandler = async () => {
     console.error('Register');
@@ -141,6 +143,7 @@ export const AuthRegister = ({ ...others }) => {
         initialValues={{
           email: '',
           password: '',
+          role: 'user',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -149,9 +152,11 @@ export const AuthRegister = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            values.name = values.fname + ' ' + values.lname
             await signup(values)
             setStatus({ success: true });
             setSubmitting(false);
+            router.push('/login', { scroll: false })
           } catch (err) {
             console.error(err);
             setStatus({ success: false });

@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container';
-import ProductsView from '@/components/products/view/products-view';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
@@ -7,7 +7,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold underline">
         Hello world!
       </h1>
-      <ProductsView />
+      <Footer />
     </Container>
   );
 }
