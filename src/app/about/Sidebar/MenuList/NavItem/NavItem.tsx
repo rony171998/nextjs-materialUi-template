@@ -28,12 +28,8 @@ const NavItem = ({ item, level }) => {
     const pathname = usePathname();
     const borderRadius = useCustomizationStore(state => state.borderRadius);
     const isOpen = useCustomizationStore(state => state.isOpen);
-    const setMenuOpen = useCustomizationStore(state => {
-        state.setMenuOpen;
-    });
-    const setMenu = useCustomizationStore(state => {
-        state.setMenu;
-    });
+    const setMenuOpen = useCustomizationStore(state => state.setMenuOpen);
+    const setMenu = useCustomizationStore(state => state.setMenu);
     const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
 
     const Icon = item.icon;
@@ -63,9 +59,9 @@ const NavItem = ({ item, level }) => {
         listItemProps = { component: "a", href: item.url, target: itemTarget };
     }
 
-    const itemHandler = id => {
-        setMenuOpen({ id });
-        if (matchesSM) setMenu({ opened: false });
+    const itemHandler = (id: any) => {
+        setMenuOpen(id);
+        if (matchesSM) setMenu(false);
     };
 
     // active menu item on page load
@@ -75,7 +71,7 @@ const NavItem = ({ item, level }) => {
             .split("/")
             .findIndex(id => id === item.id);
         if (currentIndex > -1) {
-            setMenuOpen({ id: item.id });
+            setMenuOpen(item.id);
         }
         // eslint-disable-next-line
     }, [pathname]);

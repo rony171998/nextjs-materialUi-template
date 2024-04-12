@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { StyledEngineProvider } from '@mui/material';
 import { CustomizationStoreProvider } from '@/providers/customization-store-provider'
 import CustomThemeProvider from "./customThemeProvider";
+import SnackbarProviderClient from "@/providers/SnackbarProviderClient";
 
 export const metadata: Metadata = {
   title: "Smart Mark App",
@@ -17,7 +18,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
           <StyledEngineProvider injectFirst>
             <CustomizationStoreProvider>
               <CustomThemeProvider>
-                {children}
+                <SnackbarProviderClient >
+                  {children}
+                </SnackbarProviderClient>
               </CustomThemeProvider>
             </CustomizationStoreProvider>
           </StyledEngineProvider>

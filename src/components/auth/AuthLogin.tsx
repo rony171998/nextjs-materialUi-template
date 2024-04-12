@@ -35,6 +35,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Image from "next/image";
 import { useCustomizationStore } from '@/providers/customization-store-provider'
+import useAuthStore from '@/stores/userStorage';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -44,6 +45,7 @@ export const AuthLogin = ({ ...others }) => {
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const { borderRadius } = useCustomizationStore((state) => state)
     const [checked, setChecked] = useState(true);
+    const { login } = useAuthStore();
 
     const googleHandler = async () => {
         console.error('Login');
@@ -138,17 +140,15 @@ export const AuthLogin = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        if (scriptedRef.current) {
-                            setStatus({ success: true });
-                            setSubmitting(false);
-                        }
+                        console.log(values, 'logeard', scriptedRef)
+                        await login(values);
+                        setStatus({ success: true });
+                        setSubmitting(false);
                     } catch (err) {
                         console.error(err);
-                        if (scriptedRef.current) {
-                            setStatus({ success: false });
-                            setErrors({ submit: err.message });
-                            setSubmitting(false);
-                        }
+                        setStatus({ success: false });
+                        setErrors({ submit: err.message });
+                        setSubmitting(false);
                     }
                 }}
             >

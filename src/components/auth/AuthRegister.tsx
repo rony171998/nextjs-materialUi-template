@@ -38,6 +38,7 @@ import Link from 'next/link';
 
 
 import { useCustomizationStore } from '@/providers/customization-store-provider'
+import useAuthStore from '@/stores/userStorage';
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 export const AuthRegister = ({ ...others }) => {
@@ -52,6 +53,7 @@ export const AuthRegister = ({ ...others }) => {
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
+  const { signup } = useAuthStore();
 
   const googleHandler = async () => {
     console.error('Register');
@@ -147,17 +149,14 @@ export const AuthRegister = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            if (scriptedRef.current) {
-              setStatus({ success: true });
-              setSubmitting(false);
-            }
+            await signup(values)
+            setStatus({ success: true });
+            setSubmitting(false);
           } catch (err) {
             console.error(err);
-            if (scriptedRef.current) {
-              setStatus({ success: false });
-              setErrors({ submit: err.message });
-              setSubmitting(false);
-            }
+            setStatus({ success: false });
+            setErrors({ submit: err.message });
+            setSubmitting(false);
           }
         }}
       >

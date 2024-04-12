@@ -6,17 +6,22 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
-import { products } from '../../_mock/products';
+//import { products } from '../../_mock/products';
 
 import ProductCard from '../product-card';
 import ProductSort from '../product-sort';
 import ProductCartWidget from '../product-cart-widget';
 import ProductFilters from '../product-filters';
 import { Box } from '@mui/material';
+import { Product } from '@/stores/useProductsStorage';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsView() {
+interface Props {
+  products: Product[] | []
+}
+export default function ProductsView(props: Props) {
+  const { products } = props
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {
@@ -26,6 +31,8 @@ export default function ProductsView() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
+
+  console.log(products)
 
   return (
     <Box>

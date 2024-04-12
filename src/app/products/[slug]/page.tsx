@@ -9,10 +9,8 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SlideshowLightbox } from 'lightbox.js-react'
 // pages/[productId].js
 
-import { Suspense, useState } from 'react';
 import StepperGallery from '@/components/products/StepperGallery';
 import RatingProduct from '@/components/products/Rating';
 
@@ -28,20 +26,61 @@ export default function ProductPage() {
     }))
     return (
         <>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
-                    <StepperGallery images={images} />
-                </Grid>
-                <Grid item xs={6}>
-                    {product ?
-                        <ProductDescription product={product} />
-                        : null
-                    }
-                </Grid>
-            </Grid>
-            {/* <RelatedProducts relatedProducts={products} /> */}
+            <Stack direction={'row'} spacing={3}>
+                <StepperGallery images={images} />
+                <ProductDescription product={product} />
+            </Stack>
+
+            <RelatedProducts relatedProducts={products} />
+            {/* <Footer /> */}
         </>
 
+    );
+}
+function ProductDescription({ product }) {
+
+    return (
+        <Stack>
+            <Box sx={{ mb: 6, mt: 15, borderBottom: '1px solid', pb: 6, borderColor: '#E2E8F0', flex: 'none' }}>
+                <Typography variant="h1" sx={{ mb: 2, fontSize: '2.5rem', fontWeight: 'bold' }}>
+                    {product.name}
+                </Typography>
+                <RatingProduct />
+                <Typography
+                    component="span"
+                    variant="body1"
+                    sx={{
+                        color: 'text.disabled',
+                        textDecoration: 'line-through',
+                    }}
+                >
+                    {product.id}
+                </Typography>
+            </Box>
+            {/* <ColorPreview colors={product.colors} /> */}
+
+            <Typography variant="subtitle1">
+                <Typography
+                    component="span"
+                    variant="body1"
+                    sx={{
+                        color: 'text.disabled',
+                        textDecoration: 'line-through',
+                    }}
+                >
+                    {product.priceSale}
+                </Typography>
+                &nbsp;
+                {product.price}
+            </Typography>
+
+            <Box sx={{ mt: 2 }}>
+                <Button variant='contained' sx={{ mr: 2 }}>
+                    Añadir al carrito
+                </Button>
+                <Button variant='outlined'>Comprar ahora</Button>
+            </Box>
+        </Stack>
     );
 }
 
@@ -128,6 +167,7 @@ function Gallery({ images }) {
 //     return { props: { product } };
 // }
 
+
 function RelatedProducts({ relatedProducts }) {
     //const relatedProducts = await getProductRecommendations(id);
 
@@ -150,7 +190,7 @@ function RelatedProducts({ relatedProducts }) {
                                         alt={product.name}
                                         width={250}
                                         height={250}
-                                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                                    //style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                     />
                                     <Box
                                         sx={{
@@ -180,52 +220,4 @@ function RelatedProducts({ relatedProducts }) {
         </Box>
     );
 }
-
-function ProductDescription({ product }) {
-
-    return (
-        <>
-            <Box sx={{ mb: 6, borderBottom: '1px solid', pb: 6, borderColor: '#E2E8F0', flex: 'none' }}>
-                <Typography variant="h1" sx={{ mb: 2, fontSize: '2.5rem', fontWeight: 'bold' }}>
-                    {product.name}
-                </Typography>
-                {/* <RatingProduct /> */}
-                <Typography
-                    component="span"
-                    variant="body1"
-                    sx={{
-                        color: 'text.disabled',
-                        textDecoration: 'line-through',
-                    }}
-                >
-                    {product.id}
-                </Typography>
-            </Box>
-            {/* <ColorPreview colors={product.colors} />
-
-            <Typography variant="subtitle1">
-                <Typography
-                    component="span"
-                    variant="body1"
-                    sx={{
-                        color: 'text.disabled',
-                        textDecoration: 'line-through',
-                    }}
-                >
-                    {product.priceSale}
-                </Typography>
-                &nbsp;
-                {product.price}
-            </Typography>
-
-            <Box sx={{ mt: 2 }}>
-                <Button variant='contained' sx={{ mr: 2 }}>
-                    Añadir al carrito
-                </Button>
-                <Button variant='outlined'>Comprar ahora</Button>
-            </Box> */}
-        </>
-    );
-}
-
 

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import NextLink from 'next/link';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -10,10 +9,16 @@ import { fCurrency } from '../utils/format-number';
 
 import Label from '../label/label';
 import ColorPreview from '../color-utils/color-preview';
+import { Product } from '@/stores/useProductsStorage';
 
 // ----------------------------------------------------------------------
 
-export default function ShopProductCard({ product }) {
+interface Props {
+  product: Product
+}
+
+export default function ShopProductCard(props: Props) {
+  const { product } = props
 
   const renderStatus = (
     <Label
@@ -38,8 +43,8 @@ export default function ShopProductCard({ product }) {
 
         <Box
           component="img"
-          alt={product.name}
-          src={product.cover}
+          alt={product.title}
+          src={product.productImgs[0]}
           sx={{
             top: 0,
             width: 1,
@@ -52,11 +57,11 @@ export default function ShopProductCard({ product }) {
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {product.name}
+          {product.title}
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={product.colors} />
+          {/* <ColorPreview colors={product.status} /> */}
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -66,7 +71,7 @@ export default function ShopProductCard({ product }) {
                 textDecoration: 'line-through',
               }}
             >
-              {product.priceSale && fCurrency(product.priceSale)}
+              {product.price && fCurrency(product.price)}
             </Typography>
             &nbsp;
             {fCurrency(product.price)}
@@ -80,6 +85,3 @@ export default function ShopProductCard({ product }) {
   );
 }
 
-ShopProductCard.propTypes = {
-  product: PropTypes.object,
-};

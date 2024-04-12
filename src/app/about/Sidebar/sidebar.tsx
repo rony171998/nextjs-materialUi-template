@@ -10,7 +10,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { BrowserView, MobileView } from "react-device-detect";
 
 // project imports
-//import MenuList from './MenuList';
 import LogoSection from "../LogoSection";
 import MenuCard from "./MenuCard";
 import { drawerWidth } from "@/stores/constant";
@@ -19,7 +18,7 @@ import { useCustomizationStore } from "@/providers/customization-store-provider"
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
-const Sidebar = ({ window }) => {
+const Sidebar = () => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up("md"));
     const drawerOpen = useCustomizationStore(state => state.opened);
@@ -70,9 +69,6 @@ const Sidebar = ({ window }) => {
         </>
     );
 
-    const container =
-        window !== undefined ? () => window.document.body : undefined;
-
     return (
         <Box
             component="nav"
@@ -82,7 +78,6 @@ const Sidebar = ({ window }) => {
             }}
         >
             <Drawer
-                container={container}
                 variant={"persistent"}
                 anchor="left"
                 open={drawerOpen}
