@@ -35,7 +35,13 @@ const useProductsStore = create<productsStore>((set) => ({
   fetchData: async () => {
     try {
       const response = await axios.get('/products');
-      if (response.data.products.leght) set({ products: response.data.products });
+      if (response.status === 200) {
+        // Si la respuesta es 200, actualiza los productos en el estado
+        set({ products: response.data.products });
+      } else if (response.status === 304) {
+        // Si la respuesta es 304, no actualices los productos en el estado
+        enqueueSnackbar('No hay cambios en los productos.' , { variant: 'info'});
+      }
     } catch (error:any) {
       console.error('Error fetching data:', error);
       enqueueSnackbar(error.message , {variant: 'error'});
