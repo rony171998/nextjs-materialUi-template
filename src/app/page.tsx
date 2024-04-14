@@ -21,21 +21,24 @@ export default function Home() {
     <>
       <Container maxWidth="xl">
         <StepperGalleryPromos />
-        <Grid container md={12} lg={6}>
-          <Grid item>
-            {products.length ?
-              <StepperGalleryPromosProducts products={products} />
-              :
+        <Grid container spacing={2}>
+          {products.length ? (
+            <>
+              <Grid item lg={4}>
+                <StepperGalleryPromosProducts products={products} />
+              </Grid>
+              <Grid item lg={4}>
+                <StepperGalleryPromosProducts products={products} />
+              </Grid>
+              <Grid item lg={4}>
+                <StepperGalleryPromosProducts products={products} />
+              </Grid>
+            </>
+          ) : (
+            <Grid item xs={12}>
               <Emptyproducts />
-            }
-          </Grid>
-          <Grid item>
-            {products.length ?
-              <StepperGalleryPromosProducts products={products} />
-              :
-              <Emptyproducts />
-            }
-          </Grid>
+            </Grid>
+          )}
         </Grid>
       </Container>
       <Footer />

@@ -9,6 +9,7 @@ import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { autoPlay } from 'react-swipeable-views-utils-react-18-fix';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -31,6 +32,7 @@ function StepperGalleryPromos() {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const maxSteps = images.length;
+    const router = useRouter()
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -51,6 +53,7 @@ function StepperGalleryPromos() {
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
+
             >
                 {images.map((step, index) => (
                     <div key={step.label}>
@@ -63,6 +66,7 @@ function StepperGalleryPromos() {
                                 height={1}
                                 layout="responsive"
                                 style={{ borderRadius: '15px' }}
+                                onClick={() => router.push('/products')}
                             />
                         ) : null}
                     </div>

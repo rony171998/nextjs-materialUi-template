@@ -10,6 +10,10 @@ import { autoPlay } from 'react-swipeable-views-utils-react-18-fix';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Product } from '@/stores/useProductsStorage';
+import { useRouter } from 'next/navigation';
+import { Avatar, Card, CardHeader, IconButton } from '@mui/material';
+import { red } from '@mui/material/colors';
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -22,6 +26,7 @@ function StepperGalleryPromosProducts(props: Props) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const maxSteps = products.length;
+    const router = useRouter()
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -31,8 +36,8 @@ function StepperGalleryPromosProducts(props: Props) {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleStepChange = (step: number) => {
-        setActiveStep(step);
+    const handleStepChange = (product: number) => {
+        setActiveStep(product);
     };
 
     console.log(products)
@@ -45,18 +50,36 @@ function StepperGalleryPromosProducts(props: Props) {
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
             >
-                {products.map((step, index) => (
-                    <div key={step.id}>
+                {products.map((product, index) => (
+                    <div key={product.id}>
                         {Math.abs(activeStep - index) <= 2 ? (
-                            <Image
-                                src={step.productImgs[0] || '/assets/images/imagenotfount.png'}
-                                alt={step.title}
-                                priority={true}
-                                width={1}
-                                height={1}
-                                layout="responsive"
-                                style={{ borderRadius: '15px' }}
-                            />
+                            <Card>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar>
+                                            {product.title.at(0)}
+                                        </Avatar>
+                                    }
+                                    action={
+                                        <IconButton aria-label="settings">
+                                            <MoreVertRoundedIcon />
+                                        </IconButton>
+                                    }
+                                    title={product.title}
+                                    subheader={product.updatedAt}
+                                />
+                                <Image
+                                    src={product.productImgs[0] || '/assets/images/imagenotfount.png'}
+                                    alt={product.title}
+                                    priority={true}
+                                    width={1}
+                                    height={1}
+                                    layout="responsive"
+                                    style={{ borderRadius: '15px' }}
+                                    onClick={() => router.push('/products/' + product.id)}
+                                />
+                            </Card>
+
                         ) : null}
                     </div>
                 )

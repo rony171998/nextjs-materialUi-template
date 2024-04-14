@@ -44,7 +44,7 @@ export default function ShopProductCard(props: Props) {
         <Box
           component="img"
           alt={product.title}
-          src={product.productImgs[0]}
+          src={product.productImgs[0] || '/assets/images/imagenotfount.png'}
           sx={{
             top: 0,
             width: 1,

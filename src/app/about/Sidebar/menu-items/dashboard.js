@@ -1,8 +1,8 @@
 // assets
-import { IconDashboard } from "@tabler/icons-react";
+import { IconDashboard, IconHome } from "@tabler/icons-react";
 
 // constant
-const icons = { IconDashboard };
+const icons = { IconDashboard, IconHome };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -13,10 +13,10 @@ const dashboard = {
     children: [
         {
             id: "default",
-            title: "Dashboard",
+            title: "Home",
             type: "item",
-            url: "/dashboard/default",
-            icon: icons.IconDashboard,
+            url: "/",
+            icon: icons.IconHome,
             breadcrumbs: false,
         },
         {
