@@ -1,11 +1,8 @@
 "use client"
 import ProductsView from '@/components/products/view/products-view';
-import { getProducs } from '@/components/utils/getProducts';
 import useProductsStore from '@/stores/useProductsStorage';
 import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-
-export const revalidate = 3600
+import { useEffect } from 'react';
 
 export default function Home() {
     const { products, fetchData } = useProductsStore();
@@ -16,11 +13,9 @@ export default function Home() {
         }
     }, []);
 
-    console.log(products, 'products')
-
     return (
         <>
-            {products, length ?
+            {products.length ?
                 <ProductsView products={products} />
                 :
                 <Typography>Producs not fount</Typography>
