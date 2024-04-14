@@ -13,21 +13,6 @@ import { Product } from '@/stores/useProductsStorage';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const images = [
-    {
-        label: 'Promotion1',
-        imgPath: '/assets/background/D_NQ_798246-MLA51294079057_082022-OO.webp',
-    },
-    {
-        label: 'Promotion2',
-        imgPath: '/assets/background/D_NQ_897224-MLA51357905917_082022-OO.webp',
-    },
-    {
-        label: 'Promotion3',
-        imgPath: '/assets/background/D_NQ_970783-MLA51263616338_082022-OO.webp',
-    },
-];
-
 type Props = {
     products: Product[] | []
 }
@@ -36,7 +21,7 @@ function StepperGalleryPromosProducts(props: Props) {
     const products = props.products
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
-    const maxSteps = images.length;
+    const maxSteps = products.length;
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -50,6 +35,8 @@ function StepperGalleryPromosProducts(props: Props) {
         setActiveStep(step);
     };
 
+    console.log(products)
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AutoPlaySwipeableViews
@@ -62,7 +49,7 @@ function StepperGalleryPromosProducts(props: Props) {
                     <div key={step.id}>
                         {Math.abs(activeStep - index) <= 2 ? (
                             <Image
-                                src={step.productImgs[0]}
+                                src={step.productImgs[0] || '/assets/images/imagenotfount.png'}
                                 alt={step.title}
                                 priority={true}
                                 width={1}
