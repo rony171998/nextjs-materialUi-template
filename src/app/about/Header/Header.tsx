@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 // material-ui
 import { useTheme } from "@mui/material/styles";
-import { Avatar, Box, ButtonBase } from "@mui/material";
+import { Avatar, Box, ButtonBase, InputAdornment, OutlinedInput } from "@mui/material";
 
 // project imports
 import LogoSection from "../LogoSection";
@@ -11,7 +11,7 @@ import ProfileSection from "./ProfileSection/ProfileSection";
 import NotificationSection from "./NotificationSection/NotificationSection";
 
 // assets
-import { IconMenu2 } from "@tabler/icons-react";
+import { IconMenu2, IconSearch } from "@tabler/icons-react";
 import { useCustomizationStore } from "@/providers/customization-store-provider";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
@@ -63,6 +63,17 @@ const Header = () => {
                     </Avatar>
                 </ButtonBase>
             </Box>
+            <OutlinedInput
+                sx={{ width: '30%', mx: '30%' }}
+                //value={value}
+                //onChange={(e) => setValue(e.target.value)}
+                placeholder="Search profile options"
+                startAdornment={
+                    <InputAdornment position="start">
+                        <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                    </InputAdornment>
+                }
+            />
 
             {/* header search */}
             <Box sx={{ flexGrow: 1 }} />
