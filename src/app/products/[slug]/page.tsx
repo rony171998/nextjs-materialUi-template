@@ -26,13 +26,12 @@ export default function ProductPage() {
     }))
     return (
         <>
-            <Stack direction={'row'} spacing={3}>
+            <Stack direction={'row'} spacing={3} mt={10}>
                 <StepperGallery images={images} />
                 <ProductDescription product={product} />
             </Stack>
 
             <RelatedProducts relatedProducts={products} />
-            {/* <Footer /> */}
         </>
 
     );
