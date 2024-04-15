@@ -6,7 +6,9 @@ import { useEffect } from 'react';
 import StepperGalleryPromosProducts from '@/components/products/StepperGalleryPromoProducts';
 import Footer from '@/components/Footer';
 import Emptyproducts from '@/components/products/EmptyProducts';
-import { Grid } from '@mui/material';
+import { AppBar, Grid, InputAdornment, OutlinedInput, Toolbar } from '@mui/material';
+import Header from './about/Header/Header';
+import { IconSearch } from '@tabler/icons-react';
 
 export default function Home() {
   const { products, fetchData } = useProductsStore();
@@ -19,7 +21,18 @@ export default function Home() {
 
   return (
     <>
-      <Container maxWidth="xl">
+      <AppBar
+        enableColorOnDark
+        position="fixed"
+        color="inherit"
+        elevation={0}
+
+      >
+        <Toolbar>
+          <Header />
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="xl" sx={{ mt: 10 }}>
         <StepperGalleryPromos />
         <Grid container spacing={2}>
           {products.length ? (
