@@ -53,7 +53,7 @@ const useProductsStore = create<productsStore>((set) => ({
   postProduct: async (formData: FormData) => {
     try {
       const response = await axios.post ("/products", formData, getConfig())
-      if (response.status === 200) {
+      if (response.status >= 200 && response.status < 300) {
         // Si la respuesta es 200, actualiza los productos en el estado
         enqueueSnackbar(response.statusText , { variant: 'success' });
       } else if (response.status === 304) {

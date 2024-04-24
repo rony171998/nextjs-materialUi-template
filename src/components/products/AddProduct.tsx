@@ -16,6 +16,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  styled,
   TextField,
   Typography,
   useMediaQuery
@@ -35,11 +36,21 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import useScriptRef from '../hooks/useScriptRef';
 import AnimateButton from '../ui-component/extended/AnimateButton';
 import Link from 'next/link';
-
+import AttachFileIcon from '@mui/icons-material/AttachFile'
 
 import { useCustomizationStore } from '@/providers/customization-store-provider'
 import useProductsStorage from '@/stores/useProductsStorage';
 import { useRouter } from 'next/navigation';
+
+const MuiFileInputStyled = styled(MuiFileInput)`
+  & input + span {
+    color: green;
+  }
+  input {
+    border: 1px dashed red; /* Aplica borde punteado gris al input */
+    height: 100px; /* Establece la altura del input en 250px */
+  }
+`
 
 export const AddProduct = ({ ...others }) => {
   const theme = useTheme();
@@ -106,7 +117,7 @@ export const AddProduct = ({ ...others }) => {
       {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit} {...others}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <FormControl fullWidth error={Boolean(touched.title && errors.title)}>
                 <InputLabel htmlFor="title">Title</InputLabel>
                 <OutlinedInput
@@ -121,12 +132,15 @@ export const AddProduct = ({ ...others }) => {
                 )}
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <FormControl fullWidth error={Boolean(touched.description && errors.description)}>
                 <InputLabel htmlFor="description">Description</InputLabel>
                 <OutlinedInput
                   id="description"
                   type="text"
+                  multiline
+                  rows={5}
+                  placeholder="Caracteristicas del producto..."
                   value={values.description}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -183,14 +197,15 @@ export const AddProduct = ({ ...others }) => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth error={Boolean(touched.productImg && errors.productImg)}>
-                <InputLabel htmlFor="productImg">Product Image(s)</InputLabel>
-                <MuiFileInput
+                {/* <InputLabel htmlFor="productImg">Product Image(s)</InputLabel> */}
+
+                <MuiFileInputStyled
                   fullWidth
-                  label="Archivos Associados a la Orden"
-                  //value={Files}
-                  // onChange={(newValue: File[] | null) => {
-                  // 	setFiles(newValue)
-                  // }}
+                  size='medium'
+                  variant="outlined"
+
+                  label="Imagenes del producto"
+                  value={values.productImg}
                   onChange={(newValue: File[] | null) => {
                     handleChange({
                       target: {
@@ -200,10 +215,15 @@ export const AddProduct = ({ ...others }) => {
                     });
                   }}
                   onBlur={handleBlur}
-                  hideSizeText
-                  inputProps={{ accept: '.png, .jpeg ' }}
+                  InputProps={{
+                    inputProps: {
+                      accept: 'image/*'
+                    },
+                    startAdornment: <AttachFileIcon />
+                  }}
                   multiple
                 />
+
                 {/* <OutlinedInput
                   id="productImg"
                   type="file"
