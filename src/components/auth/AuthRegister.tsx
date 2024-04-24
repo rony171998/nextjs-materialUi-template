@@ -156,7 +156,7 @@ export const AuthRegister = ({ ...others }) => {
             await signup(values)
             setStatus({ success: true });
             setSubmitting(false);
-            router.push('/login', { scroll: false })
+            router.push('/auth/login', { scroll: false })
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
