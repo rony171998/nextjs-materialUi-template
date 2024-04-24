@@ -8,6 +8,13 @@ const nextConfig = {
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "mybucket-smart-mark.s3.us-east-2.amazonaws.com",
+                port: "",
+                pathname: "/**",
+            },
+            //https://mybucket-smart-mark.s3.us-east-2.amazonaws.com/Captura+de+pantalla_20221026_150539.png
         ],
     },
 };

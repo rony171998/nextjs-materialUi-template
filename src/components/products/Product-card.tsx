@@ -19,7 +19,7 @@ interface Props {
 
 export default function ShopProductCard(props: Props) {
   const { product } = props
-
+  console.log('produc', product)
   const renderStatus = (
     <Label
       variant="filled"
@@ -44,7 +44,7 @@ export default function ShopProductCard(props: Props) {
         <Box
           component="img"
           alt={product.title}
-          src={product.productImgs[0] || '/assets/images/imagenotfount.png'}
+          src={product.productImgs.length ? product.productImgs.at(0)?.imgUrl : '/assets/images/imagenotfount.png'}
           sx={{
             top: 0,
             width: 1,

@@ -69,7 +69,8 @@ function StepperGalleryPromosProducts(props: Props) {
                                     subheader={product.updatedAt}
                                 />
                                 <Image
-                                    src={product.productImgs[0] || '/assets/images/imagenotfount.png'}
+                                    //'https://mybucket-smart-mark.s3.us-east-2.amazonaws.com/Captura+de+pantalla_20221026_150539.png'
+                                    src={product.productImgs.length ? product.productImgs[0]?.imgUrl : '/assets/images/imagenotfount.png'}
                                     alt={product.title}
                                     priority={true}
                                     width={1}

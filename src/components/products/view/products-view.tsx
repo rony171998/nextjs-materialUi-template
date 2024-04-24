@@ -32,7 +32,7 @@ export default function ProductsView(props: Props) {
     setOpenFilter(false);
   };
 
-  console.log(products)
+  //console.log(products)
 
   return (
     <Box>

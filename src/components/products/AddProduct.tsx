@@ -27,6 +27,7 @@ import { Formik } from 'formik';
 
 // project imports
 import Image from 'next/image';
+import { MuiFileInput } from 'mui-file-input'
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -37,7 +38,7 @@ import Link from 'next/link';
 
 
 import { useCustomizationStore } from '@/providers/customization-store-provider'
-import useAuthStore from '@/stores/userStorage';
+import useProductsStorage from '@/stores/useProductsStorage';
 import { useRouter } from 'next/navigation';
 
 export const AddProduct = ({ ...others }) => {
@@ -52,7 +53,7 @@ export const AddProduct = ({ ...others }) => {
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
-  const { signup } = useAuthStore();
+  const { postProduct } = useProductsStorage();
   const router = useRouter()
 
   const submit = (data) => {
@@ -67,6 +68,7 @@ export const AddProduct = ({ ...others }) => {
       formData.append("productImg", value);
     }
 
+    postProduct(formData);
   };
 
   return (
@@ -182,7 +184,27 @@ export const AddProduct = ({ ...others }) => {
             <Grid item xs={12}>
               <FormControl fullWidth error={Boolean(touched.productImg && errors.productImg)}>
                 <InputLabel htmlFor="productImg">Product Image(s)</InputLabel>
-                <OutlinedInput
+                <MuiFileInput
+                  fullWidth
+                  label="Archivos Associados a la Orden"
+                  //value={Files}
+                  // onChange={(newValue: File[] | null) => {
+                  // 	setFiles(newValue)
+                  // }}
+                  onChange={(newValue: File[] | null) => {
+                    handleChange({
+                      target: {
+                        id: 'productImg',
+                        value: newValue
+                      }
+                    });
+                  }}
+                  onBlur={handleBlur}
+                  hideSizeText
+                  inputProps={{ accept: '.png, .jpeg ' }}
+                  multiple
+                />
+                {/* <OutlinedInput
                   id="productImg"
                   type="file"
                   multiple
@@ -196,7 +218,7 @@ export const AddProduct = ({ ...others }) => {
                       }
                     });
                   }}
-                />
+                /> */}
                 {touched.productImg && errors.productImg && (
                   <FormHelperText error>{errors.productImg}</FormHelperText>
                 )}
