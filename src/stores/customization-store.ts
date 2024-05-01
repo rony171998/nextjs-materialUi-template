@@ -26,9 +26,7 @@ export const defaultInitState: CustomizationState = {
   opened: true,
 };
 
-export const createCustomizationStore = (
-  initState: CustomizationState = defaultInitState,
-) => {
+export const createCustomizationStore = ( initState: CustomizationState = defaultInitState, ) => {
   return createStore<CustomizationStore>((set) => ({
     ...initState,
     setMenuOpen: (id) => set((state) => ({ ...state, isOpen: [id] })),
