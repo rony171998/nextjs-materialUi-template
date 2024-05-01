@@ -1,29 +1,40 @@
 'use client'
-import { products } from '@/components/_mock/products';
+import { products as productss } from '@/components/_mock/products';
 import ColorPreview from '@/components/color-utils/color-preview';
 import Footer from '@/components/Footer';
 import { GridTileImage } from '@/components/tile';
 import { fCurrency } from '@/components/utils/format-number';
-import { Box, Button, Card, CardContent, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 // pages/[productId].js
 
 import StepperGallery from '@/components/products/StepperGallery';
 import RatingProduct from '@/components/products/Rating';
+import useProductsStore, { Product } from '@/stores/useProductsStorage';
+import { useEffect } from 'react';
 
 export default function ProductPage() {
     const pathname = usePathname()
     const parts = pathname.split('/');
     const productId = parts[parts.length - 1];
-    const product = products[0];
-    console.log(product)
-    const images = products.map(imageProduct => ({
-        src: imageProduct.cover,
-        altText: imageProduct.name
+
+    const { products, fetchData } = useProductsStore()
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const product = products.find(product => product.id == productId)
+
+    const images = product?.productImgs.map(imageProduct => ({
+        src: imageProduct.imgUrl,
+        altText: product.title
     }))
+
     return (
         <>
             <Stack direction={'row'} spacing={3} mt={10}>
@@ -42,22 +53,23 @@ function ProductDescription({ product }) {
         <Stack>
             <Box sx={{ mb: 6, mt: 15, borderBottom: '1px solid', pb: 6, borderColor: '#E2E8F0', flex: 'none' }}>
                 <Typography variant="h1" sx={{ mb: 2, fontSize: '2.5rem', fontWeight: 'bold' }}>
-                    {product.name}
+                    {product.title}
                 </Typography>
                 <RatingProduct />
                 <Typography
                     component="span"
                     variant="body1"
-                    sx={{
-                        color: 'text.disabled',
-                        textDecoration: 'line-through',
-                    }}
                 >
-                    {product.id}
+                    Description: {product.description}
                 </Typography>
             </Box>
             {/* <ColorPreview colors={product.colors} /> */}
-
+            <Typography
+                component="span"
+                variant="body1"
+            >
+                Stock: {product.quantity}
+            </Typography>
             <Typography variant="subtitle1">
                 <Typography
                     component="span"
@@ -67,7 +79,7 @@ function ProductDescription({ product }) {
                         textDecoration: 'line-through',
                     }}
                 >
-                    {product.priceSale}
+                    Price: {product.price}
                 </Typography>
                 &nbsp;
                 {product.price}
@@ -158,13 +170,6 @@ function Gallery({ images }) {
         </Box>
     );
 }
-// export async function getServerSideProps({ params }) {
-//     // Aquí obtienes los datos del producto según el ID
-//     const { productId } = params;
-//     // Supongamos que aquí obtienes los datos del producto desde una API o una base de datos
-//     const product = { id: productId, name: 'Producto 1', price: '$10' };
-//     return { props: { product } };
-// }
 
 
 function RelatedProducts({ relatedProducts }) {
@@ -178,15 +183,15 @@ function RelatedProducts({ relatedProducts }) {
                 Related Products
             </Typography>
             <Grid container spacing={4}>
-                {relatedProducts.map((product, index) => {
+                {relatedProducts.map((product: Product, index) => {
                     if (index > 4) return
                     return (
                         <Grid key={product.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
                             <Link href={`/products/${product.id}`}>
                                 <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1 / 1' }}>
                                     <Image
-                                        src={product.cover}
-                                        alt={product.name}
+                                        src={product.productImgs[0].imgUrl}
+                                        alt={product.title}
                                         width={250}
                                         height={250}
                                     //style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -203,10 +208,10 @@ function RelatedProducts({ relatedProducts }) {
                                         }}
                                     >
                                         <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                                            {product.name}
+                                            {product.title}
                                         </Typography>
                                         <Typography variant="body2">
-                                            {product.priceSale}{' '}{product.price}{' '}
+                                            {product.price}{' '}{product.price}{' '}
                                             {'USD'}
                                         </Typography>
                                     </Box>
