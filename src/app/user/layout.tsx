@@ -7,6 +7,7 @@ import Header from '../about/Header/Header';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Error from '../error';
 import { CardGlass, Glass } from '@/themes/glassStyle';
+import Sidebar from '../about/Sidebar/sidebar';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -26,8 +27,11 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
         </Toolbar>
       </AppBar>
 
+      {/* drawer */}
+      <Sidebar />
+
       {/* main content */}
-      {/* <Container maxWidth={'xl'}>*/}
+      {/* <Container maxWidth={'xl'}> */}
       <Glass>
         <CardGlass>
           <ErrorBoundary fallback={<Error />}>
