@@ -6,12 +6,11 @@ import { useEffect } from 'react';
 import StepperGalleryPromosProducts from '@/components/products/StepperGalleryPromoProducts';
 import Footer from '@/components/Footer';
 import Emptyproducts from '@/components/products/EmptyProducts';
-import { AppBar, Grid, InputAdornment, OutlinedInput, Toolbar } from '@mui/material';
+import { AppBar, Grid, Toolbar } from '@mui/material';
 import Header from './about/Header/Header';
-import { IconSearch } from '@tabler/icons-react';
 
 export default function Home() {
-  const { products, fetchData } = useProductsStore();
+  const { products, fetchData, loading } = useProductsStore();
 
   useEffect(() => {
     if (products.length === 0) {
