@@ -15,49 +15,63 @@ type User = {
 }
 
 type AuthStore = {
-  token: string | null; // Cambiado de User a string para almacenar el token
+  token: string | null;
   login: (credentials: { email: string; password: string }) => Promise<void>;
   signup: (userData: { name: string; email: string; password: string }) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
 
+// Obtener el token del localStorage solo si estamos en el entorno del navegador
+const getTokenFromLocalStorage = (): string | null => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('token');
+  }
+  return null;
+};
+
 const useAuthStore = create<AuthStore>((set) => ({
-  token: localStorage.getItem('token') || null, // Obtener el token del localStorage
+  token: getTokenFromLocalStorage(),
   loading: false,
   login: async (credentials) => {
-    set({ loading: true })
+    set({ loading: true });
     axios.post('/users/login', credentials)
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        set({ token: response.data.token }); // Guardar el token en el estado
-        enqueueSnackbar('Login successful', { variant: 'success' })
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("token", response.data.token);
+        }
+        set({ token: response.data.token });
+        enqueueSnackbar('Login successful', { variant: 'success' });
       })
       .catch((error) => {
         console.error('Error login:', error);
-        enqueueSnackbar(error.response.data.message || 'Error login', { variant: 'error' });
+        enqueueSnackbar(error.response?.data?.message || 'Error login', { variant: 'error' });
       })
       .finally(() => set({ loading: false }));
   },
   signup: async (userData) => {
-    set({ loading: true })
+    set({ loading: true });
     axios.post('/users', userData)
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        set({ token: response.data.token }); // Guardar el token en el estado
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("token", response.data.token);
+        }
+        set({ token: response.data.token });
         enqueueSnackbar('Signup successful', { variant: 'success' });
       })
       .catch((error) => {
         console.error('Error signing up:', error);
-        enqueueSnackbar(error.response.data.message || 'Error signing up', { variant: 'error' });
+        enqueueSnackbar(error.response?.data?.message || 'Error signing up', { variant: 'error' });
       })
       .finally(() => set({ loading: false }));
   },
   logout: () => {
-    localStorage.removeItem('token'); // Eliminar el token del localStorage al hacer logout
-    set({ token: null }); // Limpiar el token del estado
-    // Agrega cualquier lógica adicional de logout aquí (por ejemplo, limpiar localStorage, etc.)
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+    }
+    set({ token: null });
   }
 }));
 
 export default useAuthStore;
+

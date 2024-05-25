@@ -70,7 +70,7 @@ const NotificationSection = () => {
         setOpen(prevOpen => !prevOpen);
     };
 
-    const handleClose = event => {
+    const handleClose = (event: any) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
@@ -85,7 +85,7 @@ const NotificationSection = () => {
         prevOpen.current = open;
     }, [open]);
 
-    const handleChange = event => {
+    const handleChange = (event: any) => {
         if (event?.target.value) setValue(event?.target.value);
     };
 
