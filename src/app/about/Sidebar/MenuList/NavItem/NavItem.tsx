@@ -50,11 +50,15 @@ const NavItem = ({ item, level }) => {
         itemTarget = "_blank";
     }
 
+    const CustomLink = forwardRef((props, ref) => (
+        <Link ref={ref} {...props} href={item.url} target={itemTarget} />
+    ));
+    CustomLink.displayName = 'CustomLink'; // Asignar displayName al componente
+
     let listItemProps = {
-        component: forwardRef((props, ref) => (
-            <Link ref={ref} {...props} href={item.url} target={itemTarget} />
-        )),
+        component: CustomLink,
     };
+
     if (item?.external) {
         listItemProps = { component: "a", href: item.url, target: itemTarget };
     }
@@ -135,6 +139,8 @@ const NavItem = ({ item, level }) => {
         </ListItemButton>
     );
 };
+
+NavItem.displayName = 'NavItem'; // Asignar displayName al componente
 
 NavItem.propTypes = {
     item: PropTypes.object,

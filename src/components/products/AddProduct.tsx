@@ -31,8 +31,6 @@ import Image from 'next/image';
 import { MuiFileInput } from 'mui-file-input'
 
 // assets
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import useScriptRef from '../hooks/useScriptRef';
 import AnimateButton from '../ui-component/extended/AnimateButton';
 import Link from 'next/link';
@@ -42,7 +40,7 @@ import { useCustomizationStore } from '@/providers/customization-store-provider'
 import useProductsStorage from '@/stores/useProductsStorage';
 import { useRouter } from 'next/navigation';
 
-const MuiFileInputStyled = styled(MuiFileInput)`
+export const MuiFileInputStyled = styled(MuiFileInput)`
   & input + span {
     color: green;
   }

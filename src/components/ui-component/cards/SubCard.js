@@ -48,6 +48,9 @@ const SubCard = forwardRef(({ children, content, contentClass, darkTitle, second
   );
 });
 
+// Asignar un displayName al componente
+SubCard.displayName = 'SubCard';
+
 SubCard.propTypes = {
   children: PropTypes.node,
   content: PropTypes.bool,

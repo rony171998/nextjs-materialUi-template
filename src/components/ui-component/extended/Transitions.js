@@ -91,6 +91,9 @@ const Transitions = forwardRef(({ children, position, type, direction, ...others
   );
 });
 
+// Asignar un displayName al componente
+Transitions.displayName = 'Transitions';
+
 Transitions.propTypes = {
   children: PropTypes.node,
   type: PropTypes.oneOf(['grow', 'fade', 'collapse', 'slide', 'zoom']),

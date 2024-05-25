@@ -29,7 +29,7 @@ export default function Error({
                     Oops! Something went wrong
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                    We're sorry, but an unexpected error occurred.
+                    We are sorry, but an unexpected error occurred.
                 </Typography>
                 <Button variant="contained" color="primary" onClick={reset} sx={{ mt: 2 }}>
                     Try Again

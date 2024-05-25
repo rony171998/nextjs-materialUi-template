@@ -2,18 +2,16 @@
 import { useState } from 'react';
 
 import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 
 //import { products } from '../../_mock/products';
 
-import ProductCard from '../product-card';
-import ProductSort from '../product-sort';
-import ProductCartWidget from '../product-cart-widget';
-import ProductFilters from '../product-filters';
 import { Box } from '@mui/material';
 import { Product } from '@/stores/useProductsStorage';
+import ShopProductCard from '../Product-card';
+import ShopProductSort from '../product-sort';
+import CartWidget from '../product-cart-widget';
+import ProductFilters from '../product-filters';
 
 // ----------------------------------------------------------------------
 
@@ -50,21 +48,21 @@ export default function ProductsView(props: Props) {
             onCloseFilter={handleCloseFilter}
           />
 
-          <ProductSort />
+          <ShopProductSort />
         </Stack>
       </Stack>
 
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard
+            <ShopProductCard
               product={product}
             />
           </Grid>
         ))}
       </Grid>
 
-      <ProductCartWidget />
+      <CartWidget />
     </Box>
   );
 }

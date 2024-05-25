@@ -100,6 +100,9 @@ const ColorPicker = forwardRef(
   }
 );
 
+// Asignar un displayName al componente
+ColorPicker.displayName = 'ColorPicker';
+
 ColorPicker.propTypes = {
   colors: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   limit: PropTypes.number,

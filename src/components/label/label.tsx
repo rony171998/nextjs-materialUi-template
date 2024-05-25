@@ -40,6 +40,9 @@ const Label = forwardRef(({ children, color = 'default', variant = 'soft', start
 }
 );
 
+// Asignar un displayName al componente
+Label.displayName = 'Label';
+
 Label.propTypes = {
   children: PropTypes.node,
   endIcon: PropTypes.object,

@@ -63,6 +63,9 @@ const MainCard = forwardRef(
   }
 );
 
+// Asignar un displayName al componente
+MainCard.displayName = 'MainCard';
+
 MainCard.propTypes = {
   border: PropTypes.bool,
   boxShadow: PropTypes.bool,

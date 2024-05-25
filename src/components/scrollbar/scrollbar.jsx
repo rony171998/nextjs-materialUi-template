@@ -36,6 +36,9 @@ const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
   );
 });
 
+// Asignar un displayName al componente
+Scrollbar.displayName = 'Scrollbar';
+
 Scrollbar.propTypes = {
   children: PropTypes.node,
   sx: PropTypes.object,

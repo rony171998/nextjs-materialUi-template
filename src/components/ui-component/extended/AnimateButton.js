@@ -71,6 +71,9 @@ const AnimateButton = forwardRef(({ children, type, direction, offset, scale }, 
   }
 });
 
+// Asignar un displayName al componente
+AnimateButton.displayName = 'AnimateButton';
+
 AnimateButton.propTypes = {
   children: PropTypes.node,
   offset: PropTypes.number,

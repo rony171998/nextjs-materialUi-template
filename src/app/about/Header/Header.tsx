@@ -46,8 +46,6 @@ const Header = () => {
                     <Avatar
                         variant="rounded"
                         sx={{
-                            ...theme.typography.commonAvatar,
-                            ...theme.typography.mediumAvatar,
                             transition: "all .2s ease-in-out",
                             background: theme.palette.secondary.light,
                             color: theme.palette.secondary.dark,
