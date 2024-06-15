@@ -23,6 +23,8 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: process.env.NODE_ENV === "production",
     },
+    //distDir: "build",
+    //output: "export",
 };
 
 export default nextConfig;
