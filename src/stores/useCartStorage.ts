@@ -3,11 +3,11 @@ import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://localhost:4000/api/v1';
+  axios.defaults.baseURL = 'http://ec2-18-217-218-230.us-east-2.compute.amazonaws.com/api/v1';
   //axios.defaults.baseURL = 'https://ecommerce-express.azurewebsites.net/api/v1';
 
 } else {
-  axios.defaults.baseURL = 'https://ecommerce-express.azurewebsites.net/api/v1';
+  axios.defaults.baseURL = 'https://ec2-18-217-218-230.us-east-2.compute.amazonaws.com/api/v1';
 }
 
 type categoryStore = {
