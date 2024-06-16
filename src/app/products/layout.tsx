@@ -9,6 +9,7 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Error from '../error';
 import { CardGlass, Glass } from '@/themes/glassStyle';
 import Footer from '@/components/Footer';
+import CartWidget from '@/components/products/product-cart-widget';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -42,6 +43,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
           </CardGlass>
         </Glass>
       </Container>
+      <CartWidget />
     </Box>
   );
 };

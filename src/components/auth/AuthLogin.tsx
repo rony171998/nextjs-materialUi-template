@@ -37,7 +37,7 @@ import Image from "next/image";
 import { useCustomizationStore } from '@/providers/customization-store-provider'
 import useAuthStore from '@/stores/userStorage';
 import { useRouter } from 'next/navigation';
-
+import { signIn, useSession, signOut } from "next-auth/react";
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 export const AuthLogin = ({ ...others }) => {
@@ -49,10 +49,8 @@ export const AuthLogin = ({ ...others }) => {
     const { login } = useAuthStore();
     const router = useRouter()
 
-    const googleHandler = async () => {
-        console.error('Login');
-    };
-
+    const { data: session } = useSession();
+    console.log(session)
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -70,7 +68,7 @@ export const AuthLogin = ({ ...others }) => {
                         <Button
                             disableElevation
                             fullWidth
-                            onClick={googleHandler}
+                            onClick={signIn}
                             size="large"
                             variant="outlined"
                             sx={{

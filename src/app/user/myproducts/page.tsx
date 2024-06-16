@@ -1,6 +1,7 @@
 "use client"
 import Emptyproducts from '@/components/products/EmptyProducts';
 import ProductsView from '@/components/products/view/products-view';
+import ProductsViewGrid from '@/components/products/view/products-view-grid';
 import useProductsStore from '@/stores/useProductsStorage';
 import { useEffect } from 'react';
 
@@ -8,7 +9,7 @@ export default function Home() {
     const { myproducts, getMyProducts, loading } = useProductsStore();
 
     useEffect(() => {
-        if (myproducts) {
+        if (!myproducts) {
             getMyProducts()
         }
     }, []);
@@ -20,7 +21,7 @@ export default function Home() {
             ) : (
                 <>
                     {myproducts ? (
-                        <ProductsView products={myproducts.products} />
+                        <ProductsViewGrid products={myproducts.products} />
                     ) : (
                         <Emptyproducts />
                     )}

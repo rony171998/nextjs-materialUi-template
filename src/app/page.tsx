@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import Emptyproducts from '@/components/products/EmptyProducts';
 import { AppBar, Grid, Toolbar } from '@mui/material';
 import Header from './about/Header/Header';
+import Sidebar from './about/Sidebar/sidebar';
 
 export default function Home() {
   const { products, fetchData, loading } = useProductsStore();
@@ -25,12 +26,13 @@ export default function Home() {
         position="fixed"
         color="inherit"
         elevation={0}
-
       >
         <Toolbar>
           <Header />
         </Toolbar>
       </AppBar>
+      {/* drawer */}
+      <Sidebar />
       <Container maxWidth="xl" sx={{ mt: 10 }}>
         <StepperGalleryPromos />
         <Grid container spacing={2}>

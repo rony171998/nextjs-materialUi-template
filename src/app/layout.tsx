@@ -4,6 +4,7 @@ import { StyledEngineProvider } from '@mui/material';
 import { CustomizationStoreProvider } from '@/providers/customization-store-provider'
 import CustomThemeProvider from "./customThemeProvider";
 import SnackbarProviderClient from "@/providers/SnackbarProviderClient";
+import { ProvidersGoogle } from "@/providers/ProviderGoogle";
 
 export const metadata: Metadata = {
   title: "Smart Mark App",
@@ -19,7 +20,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
             <CustomizationStoreProvider>
               <CustomThemeProvider>
                 <SnackbarProviderClient >
-                  {children}
+                  <ProvidersGoogle>
+                    {children}
+                  </ProvidersGoogle>
                 </SnackbarProviderClient>
               </CustomThemeProvider>
             </CustomizationStoreProvider>

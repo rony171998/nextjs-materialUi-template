@@ -47,7 +47,6 @@ export default function ProductsView(props: Props) {
             onOpenFilter={handleOpenFilter}
             onCloseFilter={handleCloseFilter}
           />
-
           <ShopProductSort />
         </Stack>
       </Stack>
@@ -61,8 +60,6 @@ export default function ProductsView(props: Props) {
           </Grid>
         ))}
       </Grid>
-
-      <CartWidget />
     </Box>
   );
 }

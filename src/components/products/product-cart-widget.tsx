@@ -1,16 +1,19 @@
+'use client'
 import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-
 import Iconify from '../iconify';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import { useCustomizationStore } from '@/providers/customization-store-provider';
+
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
+const StyledRoot = styled(Box)(({ theme }) => ({
   zIndex: 999,
   right: 0,
   display: 'flex',
   cursor: 'pointer',
-  position: 'fixed',
+  position: 'absolute',
   alignItems: 'center',
   top: theme.spacing(16),
   height: theme.spacing(5),
@@ -23,16 +26,18 @@ const StyledRoot = styled('div')(({ theme }) => ({
   borderTopLeftRadius: Number(theme.shape.borderRadius) * 2,
   borderBottomLeftRadius: Number(theme.shape.borderRadius) * 2,
   transition: theme.transitions.create('opacity'),
-  '&:hover': { opacity: 0.72 },
+  '&:hover': { opacity: 0.92 },
 }));
 
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
+  const isOpen = useCustomizationStore(state => state.isOpen);
+  const setMenuOpen = useCustomizationStore(state => state.setMenuOpen);
   return (
     <StyledRoot>
       <Badge showZero badgeContent={0} color="error" max={99}>
-        <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />
+        <Iconify icon="eva:shopping-cart-fill" width={32} height={32} />
       </Badge>
     </StyledRoot>
   );

@@ -1,5 +1,5 @@
 'use client'
-import { CssBaseline, ThemeProvider as ThemeProviderMui } from "@mui/material";
+import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import themes from '@/themes';
 import { useCustomizationStore } from "@/providers/customization-store-provider";

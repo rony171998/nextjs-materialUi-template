@@ -2,15 +2,8 @@ import { create } from 'zustand';
 import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 
-if (process.env.NODE_ENV === 'development') {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  axios.defaults.baseURL = `${backendUrl}/api/v1`;
-    //axios.defaults.baseURL = 'https://ecommerce-express.azurewebsites.net/api/v1';
-
-} else {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  axios.defaults.baseURL = `${backendUrl}/api/v1`;
-}
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+axios.defaults.baseURL = `${backendUrl}/api/v1`;
 
 export type Product = {
     id: number

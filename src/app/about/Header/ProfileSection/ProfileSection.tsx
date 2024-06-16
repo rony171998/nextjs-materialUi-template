@@ -38,6 +38,8 @@ import { useCustomizationStore } from '@/providers/customization-store-provider'
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useSession, signOut } from "next-auth/react";
+import useAuthStore from '@/stores/userStorage';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -51,12 +53,42 @@ const ProfileSection = () => {
   const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
+  const { signup, login } = useAuthStore();
   /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
+
+  const { data: session } = useSession();
+  // useEffect(() => {
+
+  //   if (session?.user) {
+  //     const values = {
+  //       name: session.user?.name,
+  //       email: session.user?.email,
+  //       password: '123456789',
+  //       role: 'user',
+  //       typeLogin: 'google'
+  //     }
+  //     registerUserGoogle(values)
+  //   }
+  // }, [session]);
+
+  // const registerUserGoogle = async (values) => {
+  //   try {
+  //     await signup(values);
+  //     await login(values);
+  //   } catch (error) {
+  //     console.error('Error registering or logging in user:', error);
+  //   }
+  // };
+
   const anchorRef = useRef(null);
+
   const handleLogout = async () => {
-    console.log('Logout');
+    if (session?.user) {
+      signOut()
+    }
+    localStorage.removeItem('token');
   };
 
   const handleClose = (event) => {
@@ -121,12 +153,22 @@ const ProfileSection = () => {
             aria-haspopup="true"
             color="inherit"
           >
-            <Image
-              src='/assets/images/users/user-round.svg'
-              width={16}
-              height={16}
-              alt="avatar"
-            />
+            {session?.user ?
+              <img
+                src={session.user.image}
+                alt=""
+                width={36}
+                height={36}
+              //className="w-10 h-10 rounded-full cursor-pointer"
+              />
+              :
+              <Image
+                src='/assets/images/users/user-round.svg'
+                width={36}
+                height={36}
+                alt="avatar"
+              />
+            }
           </Avatar>
         }
         label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
@@ -165,7 +207,11 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Good Morning,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          Johne Doe
+                          {session?.user ?
+                            session.user.name
+                            :
+                            'Johne Doe'
+                          }
                         </Typography>
                       </Stack>
                       <Typography variant="subtitle2">Project Admin</Typography>
@@ -188,6 +234,19 @@ const ProfileSection = () => {
                     />
                     <Divider />
                   </Box>
+                  <Stack>
+                    <Stack direction="row" spacing={0.5} alignItems="center" sx={{ width: '100%' }}>
+                      {session?.user ?
+                        <img
+                          src={session.user.image}
+                          alt=""
+                          width={136}
+                          height={136}
+                          className="w-20 h-20 rounded-full cursor-pointer"
+                        /> : null}
+                    </Stack>
+                  </Stack>
+
                   <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                     <Box sx={{ p: 2 }}>
                       <Divider />

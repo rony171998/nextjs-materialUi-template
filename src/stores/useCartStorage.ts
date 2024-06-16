@@ -2,13 +2,8 @@ import { create } from 'zustand';
 import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://ec2-18-217-218-230.us-east-2.compute.amazonaws.com/api/v1';
-  //axios.defaults.baseURL = 'https://ecommerce-express.azurewebsites.net/api/v1';
-
-} else {
-  axios.defaults.baseURL = 'https://ec2-18-217-218-230.us-east-2.compute.amazonaws.com/api/v1';
-}
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+axios.defaults.baseURL = `${backendUrl}/api/v1`;
 
 type categoryStore = {
   cart: [],

@@ -4,26 +4,27 @@ import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { IconShoppingCart } from '@tabler/icons-react';
 
 import { fCurrency } from '../utils/format-number';
-
 import Label from '../label/label';
-import ColorPreview from '../color-utils/color-preview';
+import RatingProduct from './Rating';
 import { Product } from '@/stores/useProductsStorage';
 
 // ----------------------------------------------------------------------
 
 interface Props {
-  product: Product
+  product: Product;
 }
 
 export default function ShopProductCard(props: Props) {
-  const { product } = props
-  console.log('produc', product)
+  const { product } = props;
+
   const renderStatus = (
     <Label
       variant="filled"
-      color={(product.status === 'sale' && 'error') || 'info'}
+      color={(product.status === 'sale' && 'error') || 'error'}
       sx={{
         zIndex: 9,
         top: 16,
@@ -32,36 +33,53 @@ export default function ShopProductCard(props: Props) {
         textTransform: 'uppercase',
       }}
     >
-      {product.status}
+      {/* {product.status} */}
+      OFF
     </Label>
   );
 
   return (
-    <Card>
+    <Card sx={{ maxWidth: 300, m: 'auto' }}>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {product.status && renderStatus}
-
         <Box
           component="img"
           alt={product.title}
-          src={product.productImgs.length ? product.productImgs.at(0)?.imgUrl : '/assets/images/imagenotfount.png'}
+          src={
+            product.productImgs.length
+              ? product.productImgs[0]?.imgUrl
+              : '/assets/images/imagenotfound.png'
+          }
           sx={{
             top: 0,
             width: 1,
             height: 1,
-            objectFit: 'cover',
+            objectFit: 'contain',
             position: 'absolute',
           }}
         />
       </Box>
 
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
+      <Stack spacing={2} sx={{ p: 2 }}>
+        <Link
+          component={NextLink}
+          href={`/products/${product.id}`}
+          color="inherit"
+          underline="hover"
+          variant="subtitle2"
+          noWrap
+        >
           {product.title}
         </Link>
 
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <RatingProduct />
+          <Typography variant="body2" color="text.secondary">
+            ({product.price})
+          </Typography>
+        </Stack>
+
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {/* <ColorPreview colors={product.status} /> */}
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -71,17 +89,18 @@ export default function ShopProductCard(props: Props) {
                 textDecoration: 'line-through',
               }}
             >
-              {product.price && fCurrency(product.price)}
+              {product.price ? fCurrency(product.price) : null}
             </Typography>
             &nbsp;
             {fCurrency(product.price)}
           </Typography>
+          <NextLink href={`/products/${product.id}`} passHref>
+            <Button variant="contained" color="primary">
+              <IconShoppingCart />
+            </Button>
+          </NextLink>
         </Stack>
-        <NextLink href={`/products/${product.id}`} passHref>
-          <Typography component="a">View Details</Typography>
-        </NextLink>
       </Stack>
     </Card>
   );
 }
-

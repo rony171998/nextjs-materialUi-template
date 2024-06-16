@@ -20,9 +20,26 @@ function getLabelText(value: number) {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function RatingProduct() {
-    const [value, setValue] = React.useState<number | null>(2);
+interface RatingProductProps {
+    initialValue?: number;
+    showText?: boolean;
+}
+
+export default function RatingProduct({ initialValue, showText = true }: RatingProductProps) {
+    const getRandomValue = () => {
+        const keys = Object.keys(labels).map(key => parseFloat(key));
+        const randomIndex = Math.floor(Math.random() * keys.length);
+        return keys[randomIndex];
+    };
+
+    const [value, setValue] = React.useState<number | null>(initialValue ?? getRandomValue());
     const [hover, setHover] = React.useState(-1);
+
+    React.useEffect(() => {
+        if (initialValue === undefined) {
+            setValue(getRandomValue());
+        }
+    }, [initialValue]);
 
     return (
         <Box
@@ -45,9 +62,11 @@ export default function RatingProduct() {
                 }}
                 emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
             />
-            {value !== null && (
+            {showText && value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
             )}
         </Box>
     );
 }
+
+

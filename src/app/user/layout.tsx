@@ -31,15 +31,15 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       <Sidebar />
 
       {/* main content */}
-      {/* <Container maxWidth={'xl'}> */}
-      <Glass>
-        <CardGlass>
-          <ErrorBoundary fallback={<Error />}>
-            {props.children}
-          </ErrorBoundary>
-        </CardGlass>
-      </Glass>
-      {/* </Container> */}
+      <Container maxWidth={'lg'} sx={{ mt: 10 }}>
+        <Glass>
+          <CardGlass>
+            <ErrorBoundary fallback={<Error />}>
+              {props.children}
+            </ErrorBoundary>
+          </CardGlass>
+        </Glass>
+      </Container>
 
     </Box>
   );
