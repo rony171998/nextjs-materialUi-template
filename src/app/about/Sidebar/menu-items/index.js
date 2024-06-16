@@ -37,6 +37,13 @@ const menuUser = {
                     target: false,
                 },
                 {
+                    id: "myshoping",
+                    title: "My Shopping",
+                    type: "item",
+                    url: "/user/myshopping",
+                    target: false,
+                },
+                {
                     id: "addcategory",
                     title: "Register Category",
                     type: "item",

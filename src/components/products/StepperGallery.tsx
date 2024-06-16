@@ -69,10 +69,11 @@ function StepperGallery({ images }) {
                                 <Image
                                     src={step.src as string}
                                     alt={step.altText as string}
-                                    priority={true}
+                                    //priority={true}
                                     width={700}
                                     height={500}
-                                    layout="responsive"
+                                    //layout="responsive"
+                                    objectFit='cover'
                                     style={{ borderRadius: '15px' }}
                                 />
                             </Box>

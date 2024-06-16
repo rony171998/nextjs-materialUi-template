@@ -18,6 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useCartStore from '@/stores/useCartStorage';
 import { IconRefresh } from '@tabler/icons-react';
+import Link from 'next/link';
 
 const ShoppingCart = () => {
     const { cart, getCart, loading, deleteProductFromCart, patchProductToCart } = useCartStore();
@@ -115,9 +116,12 @@ const ShoppingCart = () => {
                 <Typography variant="h6">Subtotal:</Typography>
                 <Typography variant="h6">{getTotalPrice()} €</Typography>
             </Box>
-            <Button variant="contained" color="primary" fullWidth style={{ marginTop: '16px' }}>
-                Checkout
-            </Button>
+            <Link href="/user/checkout">
+                <Button variant="contained" color="primary" fullWidth style={{ marginTop: '16px' }}>
+                    Checkout
+                </Button>
+            </Link>
+
         </Container>
     );
 };

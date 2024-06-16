@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { Product } from '@/stores/useProductsStorage';
 import { useRouter } from 'next/navigation';
 import { Avatar, Card, CardHeader, IconButton } from '@mui/material';
-import { red } from '@mui/material/colors';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);

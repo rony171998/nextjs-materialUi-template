@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 // pages/[productId].js
-
 import StepperGallery from '@/components/products/StepperGallery';
 import RatingProduct from '@/components/products/Rating';
 import useProductsStore, { Product } from '@/stores/useProductsStorage';
@@ -82,7 +81,7 @@ function ProductDescription({ product }: { product: Product }) {
                     Description: {product.description}
                 </Typography>
             </Box>
-            {/* <ColorPreview colors={product.colors} /> */}
+            <ColorPreview colors={["black","white","red","blue"]} />
             <Typography
                 component="span"
                 variant="body1"
@@ -106,13 +105,14 @@ function ProductDescription({ product }: { product: Product }) {
 
             <Box sx={{ mt: 2 }}>
                 <Button variant='contained' sx={{ mr: 2 }}
-                    onclick={() => handleAddProductToCart(product.id, 1)}
+                    onClick={() => handleAddProductToCart(product.id, 1)}
                     disabled={loading}
                 >
                     {loading ? <CircularProgress /> : 'Add to cart'}
                 </Button>
                 <Button variant='outlined'
-                    onclick={() => console.log(product.id, product.quantity, 'addProductToCart')}
+                    onClick={() => handleAddProductToCart(product.id, 1)}
+                    disabled={loading}
                 >
                     Buy now
                 </Button>

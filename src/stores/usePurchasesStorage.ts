@@ -12,7 +12,7 @@ type purchasesStore = {
   postPurchase: (data: any) => void
 }
 
-const purchasesStore = create<purchasesStore>((set) => ({
+const usePurchasesStore = create<purchasesStore>((set) => ({
   purchases: [],
   loading: false,
   getPurchases: () => {
@@ -46,4 +46,4 @@ const getConfig = () => ({
   headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
 });
 
-export default purchasesStore;
+export default usePurchasesStore;
