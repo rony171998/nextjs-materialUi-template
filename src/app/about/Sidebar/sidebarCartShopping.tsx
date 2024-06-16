@@ -11,20 +11,19 @@ import { BrowserView, MobileView } from "react-device-detect";
 
 // project imports
 import LogoSection from "../LogoSection";
-import MenuCard from "./MenuCard";
-import { drawerWidth } from "@/stores/constant";
-import MenuList from "./MenuList";
+import { drawerWidthShippingCart } from "@/stores/constant";
 import { useCustomizationStore } from "@/providers/customization-store-provider";
+import ShoppingCart from "@/components/products/cartShopping/ShoppingCart";
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
-const Sidebar = () => {
+const SidebarCartShopping = () => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up("md"));
-    const drawerOpen = useCustomizationStore(state => state.opened);
+    const drawerOpen = useCustomizationStore(state => state.openedCart);
     const setOpenedMenu = useCustomizationStore(state => state.setMenu);
     const drawerToggle = () => {
-        setOpenedMenu(!leftDrawerOpened);
+        setOpenedMenu(!drawerOpen);
     };
     const drawer = (
         <>
@@ -44,26 +43,12 @@ const Sidebar = () => {
                         paddingRight: "16px",
                     }}
                 >
-                    <MenuList />
+                    <ShoppingCart />
                 </PerfectScrollbar>
             </BrowserView>
             <MobileView>
                 <Box sx={{ px: 2 }}>
-                    <MenuList />
-                    <MenuCard />
-                    <Stack
-                        direction="row"
-                        justifyContent="center"
-                        sx={{ mb: 2 }}
-                    >
-                        <Chip
-                            label={process.env.REACT_APP_VERSION}
-                            disabled
-                            chipcolor="secondary"
-                            size="small"
-                            sx={{ cursor: "pointer" }}
-                        />
-                    </Stack>
+                    <ShoppingCart />
                 </Box>
             </MobileView>
         </>
@@ -74,7 +59,7 @@ const Sidebar = () => {
             component="nav"
             sx={{
                 flexShrink: { md: 0 },
-                width: matchUpMd ? drawerWidth : "auto",
+                width: matchUpMd ? drawerWidthShippingCart : "auto",
             }}
         >
             <Drawer
@@ -84,7 +69,7 @@ const Sidebar = () => {
                 onClose={drawerToggle}
                 sx={{
                     "& .MuiDrawer-paper": {
-                        width: drawerWidth,
+                        width: drawerWidthShippingCart,
                         background: theme.palette.background.default,
                         color: theme.palette.text.primary,
                         borderRight: "none",
@@ -100,10 +85,10 @@ const Sidebar = () => {
     );
 };
 
-Sidebar.propTypes = {
+SidebarCartShopping.propTypes = {
     drawerOpen: PropTypes.bool,
     drawerToggle: PropTypes.func,
     window: PropTypes.object,
 };
 
-export default Sidebar;
+export default SidebarCartShopping;

@@ -4,6 +4,8 @@ import Iconify from '../iconify';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { useCustomizationStore } from '@/providers/customization-store-provider';
+import useCartStore from '@/stores/useCartStorage';
+import { useEffect } from 'react';
 
 
 // ----------------------------------------------------------------------
@@ -32,11 +34,17 @@ const StyledRoot = styled(Box)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
-  const isOpen = useCustomizationStore(state => state.isOpen);
-  const setMenuOpen = useCustomizationStore(state => state.setMenuOpen);
+  const openedCart = useCustomizationStore(state => state.openedCart);
+  const setMenuCart = useCustomizationStore(state => state.setMenuCart);
+  const { cart, getCart } = useCartStore()
+
+  useEffect(() => getCart(), [])
+
+  console.log(cart)
+
   return (
-    <StyledRoot>
-      <Badge showZero badgeContent={0} color="error" max={99}>
+    <StyledRoot onClick={() => setMenuCart(true)}>
+      <Badge showZero badgeContent={cart.length} color="error" max={99}>
         <Iconify icon="eva:shopping-cart-fill" width={32} height={32} />
       </Badge>
     </StyledRoot>

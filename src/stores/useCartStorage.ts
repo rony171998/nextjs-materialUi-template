@@ -5,11 +5,33 @@ import { enqueueSnackbar } from 'notistack';
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 axios.defaults.baseURL = `${backendUrl}/api/v1`;
 
+export type Cart = Array<{
+  id: number
+  cartId: number
+  productId: number
+  quantity: number
+  status: string
+  createdAt: string
+  updatedAt: string
+  product: {
+    id: number
+    title: string
+    description: string
+    quantity: number
+    price: number
+    userId: number
+    categoryId: number
+    status: string
+    createdAt: string
+    updatedAt: string
+  }
+}>
+
 type categoryStore = {
-  cart: [],
+  cart: [] | Cart,
   loading: boolean,
   getCart: () => void
-  addProductToCart: (productId: any, quantity: any) => void
+  addProductToCart: (productId: any, quantity: any) => Promise<void>
   patchProductToCart: (productId: any, quantity: any) => void
   deleteProductFromCart: (id: any) => void
 }
@@ -20,7 +42,7 @@ const useCartStore = create<categoryStore>((set) => ({
   getCart: () => {
     set({ loading: true });
     axios.get("/cart", getConfig())
-      .then((res) => set({ cart: res.data }))
+      .then((res) => set({ cart: res.data.productsinCarts }))
       .finally(() => set({ loading: false }));
   },
   addProductToCart: (productId, quantity) => {
@@ -29,6 +51,9 @@ const useCartStore = create<categoryStore>((set) => ({
     axios.post("/cart/add-product", data, getConfig())
       .then((res) => {
         enqueueSnackbar(res.statusText, { variant: "success" });
+        axios.get("/cart", getConfig())
+      .then((res) => set({ cart: res.data.productsinCarts }))
+      .finally(() => set({ loading: false }));
       })
       .catch((err) => {
         console.error(err);
@@ -42,6 +67,9 @@ const useCartStore = create<categoryStore>((set) => ({
     axios.patch("/cart/update-cart", data, getConfig())
       .then((res) => {
         enqueueSnackbar(res.statusText, { variant: "success" });
+        axios.get("/cart", getConfig())
+      .then((res) => set({ cart: res.data.productsinCarts }))
+      .finally(() => set({ loading: false }));
       })
       .catch((err) => {
         console.error(err);
@@ -55,13 +83,15 @@ const useCartStore = create<categoryStore>((set) => ({
     axios.delete(`/cart/${id}`, getConfig())
       .then((res) => {
         enqueueSnackbar(res.statusText, { variant: "success" });
+        axios.get("/cart", getConfig())
+      .then((res) => set({ cart: res.data.productsinCarts }))
+      .finally(() => set({ loading: false }));
       })
       .catch((err) => {
         console.error(err);
         enqueueSnackbar(err.response.data.message, { variant: 'error' });
       })
       .finally(() => set({ loading: false }))
-      
   },
 }));
 

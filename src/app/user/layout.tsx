@@ -8,6 +8,8 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Error from '../error';
 import { CardGlass, Glass } from '@/themes/glassStyle';
 import Sidebar from '../about/Sidebar/sidebar';
+import SidebarCartShopping from '../about/Sidebar/sidebarCartShopping';
+import CartWidget from '@/components/products/product-cart-widget';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -29,6 +31,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
 
       {/* drawer */}
       <Sidebar />
+      <SidebarCartShopping />
 
       {/* main content */}
       <Container maxWidth={'lg'} sx={{ mt: 10 }}>
@@ -40,7 +43,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
           </CardGlass>
         </Glass>
       </Container>
-
+      <CartWidget />
     </Box>
   );
 };

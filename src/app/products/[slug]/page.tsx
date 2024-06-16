@@ -4,7 +4,7 @@ import ColorPreview from '@/components/color-utils/color-preview';
 import Footer from '@/components/Footer';
 import { GridTileImage } from '@/components/tile';
 import { fCurrency } from '@/components/utils/format-number';
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,13 +16,15 @@ import StepperGallery from '@/components/products/StepperGallery';
 import RatingProduct from '@/components/products/Rating';
 import useProductsStore, { Product } from '@/stores/useProductsStorage';
 import { useEffect } from 'react';
+import useCartStore from '@/stores/useCartStorage';
+import Emptyproducts from '@/components/products/EmptyProducts';
 
 export default function ProductPage() {
     const pathname = usePathname()
     const parts = pathname.split('/');
     const productId = parts[parts.length - 1];
 
-    const { products, fetchData } = useProductsStore()
+    const { products, fetchData, loading } = useProductsStore()
 
     useEffect(() => {
         fetchData()
@@ -37,18 +39,35 @@ export default function ProductPage() {
 
     return (
         <>
-            <Stack direction={'row'} spacing={3} mt={10}>
-                <StepperGallery images={images} />
-                <ProductDescription product={product} />
-            </Stack>
+            {loading ? (
+                <div>Loading...</div> // Aquí puedes usar cualquier tipo de indicador de carga que desees
+            ) : (
+                <>
+                    {product ? (
+                        <>
+                            <Stack direction={'row'} spacing={3} mt={10}>
+                                <StepperGallery images={images} />
+                                <ProductDescription product={product} />
+                            </Stack>
 
-            <RelatedProducts relatedProducts={products} />
+                            <RelatedProducts relatedProducts={products} />
+                        </>
+                    ) : (
+                        <Emptyproducts />
+                    )}
+                </>
+            )}
         </>
 
     );
 }
-function ProductDescription({ product }) {
+function ProductDescription({ product }: { product: Product }) {
+    const { addProductToCart, loading } = useCartStore()
 
+    const handleAddProductToCart = (id: number, quiantity: number) => {
+        console.log(id, quiantity, 'addProductToCart')
+        addProductToCart(product.id, 1)
+    }
     return (
         <Stack>
             <Box sx={{ mb: 6, mt: 15, borderBottom: '1px solid', pb: 6, borderColor: '#E2E8F0', flex: 'none' }}>
@@ -82,14 +101,21 @@ function ProductDescription({ product }) {
                     Price: {product.price}
                 </Typography>
                 &nbsp;
-                {product.price}
+                {fCurrency(product.price) + ' USD'}
             </Typography>
 
             <Box sx={{ mt: 2 }}>
-                <Button variant='contained' sx={{ mr: 2 }}>
-                    Añadir al carrito
+                <Button variant='contained' sx={{ mr: 2 }}
+                    onclick={() => handleAddProductToCart(product.id, 1)}
+                    disabled={loading}
+                >
+                    {loading ? <CircularProgress /> : 'Add to cart'}
                 </Button>
-                <Button variant='outlined'>Comprar ahora</Button>
+                <Button variant='outlined'
+                    onclick={() => console.log(product.id, product.quantity, 'addProductToCart')}
+                >
+                    Buy now
+                </Button>
             </Box>
         </Stack>
     );

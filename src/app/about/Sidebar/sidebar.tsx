@@ -24,7 +24,7 @@ const Sidebar = () => {
     const drawerOpen = useCustomizationStore(state => state.opened);
     const setOpenedMenu = useCustomizationStore(state => state.setMenu);
     const drawerToggle = () => {
-        setOpenedMenu(!leftDrawerOpened);
+        setOpenedMenu(!drawerOpen);
     };
     const drawer = (
         <>
