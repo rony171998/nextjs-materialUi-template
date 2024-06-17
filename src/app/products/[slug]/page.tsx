@@ -64,7 +64,6 @@ function ProductDescription({ product }: { product: Product }) {
     const { addProductToCart, loading } = useCartStore()
 
     const handleAddProductToCart = (id: number, quiantity: number) => {
-        console.log(id, quiantity, 'addProductToCart')
         addProductToCart(product.id, 1)
     }
     return (
@@ -81,7 +80,7 @@ function ProductDescription({ product }: { product: Product }) {
                     Description: {product.description}
                 </Typography>
             </Box>
-            <ColorPreview colors={["black","white","red","blue"]} />
+            <ColorPreview colors={["black", "white", "red", "blue"]} />
             <Typography
                 component="span"
                 variant="body1"

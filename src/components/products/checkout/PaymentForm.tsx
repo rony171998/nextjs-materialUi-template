@@ -1,6 +1,6 @@
-"use client"
-import * as React from 'react';
+"use client";
 
+import * as React from 'react';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -14,43 +14,63 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import RadioGroup from '@mui/material/RadioGroup';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
 import SimCardRoundedIcon from '@mui/icons-material/SimCardRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import { styled } from '@mui/material';
 
-
 const FormGrid = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));
 
-export default function PaymentForm() {
-  const [paymentType, setPaymentType] = React.useState('creditCard');
-  const [cardNumber, setCardNumber] = React.useState('');
-  const [cvv, setCvv] = React.useState('');
-  const [expirationDate, setExpirationDate] = React.useState('');
+interface PaymentFormProps {
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  formData: {
+    paymentType: string;
+    cardNumber: string;
+    cvv: string;
+    expirationDate: string;
+  };
+}
+
+export default function PaymentForm({ handleInputChange, formData }: PaymentFormProps) {
+  const { paymentType, cardNumber, cvv, expirationDate } = formData;
 
   const handlePaymentTypeChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setPaymentType(event.target.value);
+    handleInputChange({
+      target: {
+        name: 'paymentType',
+        value: event.target.value,
+      },
+    } as React.ChangeEvent<HTMLInputElement>);
   };
 
   const handleCardNumberChange = (event: { target: { value: string } }) => {
     const value = event.target.value.replace(/\D/g, '');
     const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
     if (value.length <= 16) {
-      setCardNumber(formattedValue);
+      handleInputChange({
+        target: {
+          name: 'cardNumber',
+          value: formattedValue,
+        },
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   };
 
   const handleCvvChange = (event: { target: { value: string } }) => {
     const value = event.target.value.replace(/\D/g, '');
     if (value.length <= 3) {
-      setCvv(value);
+      handleInputChange({
+        target: {
+          name: 'cvv',
+          value,
+        },
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   };
 
@@ -58,7 +78,12 @@ export default function PaymentForm() {
     const value = event.target.value.replace(/\D/g, '');
     const formattedValue = value.replace(/(\d{2})(?=\d{2})/, '$1/');
     if (value.length <= 4) {
-      setExpirationDate(formattedValue);
+      handleInputChange({
+        target: {
+          name: 'expirationDate',
+          value: formattedValue,
+        },
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   };
 
@@ -87,7 +112,7 @@ export default function PaymentForm() {
                 paymentType === 'creditCard' ? 'background.default' : '',
             }}
           >
-            <CardActionArea onClick={() => setPaymentType('creditCard')}>
+            <CardActionArea onClick={() => handlePaymentTypeChange({ target: { value: 'creditCard' } })}>
               <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <CreditCardRoundedIcon color="primary" fontSize="small" />
                 <Typography fontWeight="medium">Card</Typography>
@@ -106,7 +131,7 @@ export default function PaymentForm() {
                 paymentType === 'bankTransfer' ? 'background.default' : '',
             }}
           >
-            <CardActionArea onClick={() => setPaymentType('bankTransfer')}>
+            <CardActionArea onClick={() => handlePaymentTypeChange({ target: { value: 'bankTransfer' } })}>
               <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <AccountBalanceRoundedIcon color="primary" fontSize="small" />
                 <Typography fontWeight="medium">Bank account</Typography>

@@ -91,7 +91,7 @@ const ShoppingCart = () => {
                             <Grid item xs={8}>
                                 <ListItemText
                                     primary={`Price`}
-                                    secondary={`${item.product.price} €`}
+                                    secondary={`${item.product.price} USD`}
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -120,7 +120,7 @@ const ShoppingCart = () => {
             </List>
             <Box display="flex" justifyContent="space-between" mt={2}>
                 <Typography variant="h6">Subtotal:</Typography>
-                <Typography variant="h6">{getTotalPrice()} €</Typography>
+                <Typography variant="h6">{getTotalPrice()} USD</Typography>
             </Box>
             <Link href="/user/checkout">
                 <Button variant="contained" color="primary" fullWidth style={{ marginTop: '16px' }}>

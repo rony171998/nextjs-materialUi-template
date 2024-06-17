@@ -1,6 +1,7 @@
 "use client"
 import Emptyproducts from '@/components/products/EmptyProducts';
 import ProductsViewGrid from '@/components/products/view/products-view-grid';
+import Orders from '@/components/products/view/purchasesOrders';
 import usePurchasesStore from '@/stores/usePurchasesStorage';
 import { useEffect } from 'react';
 
@@ -20,7 +21,7 @@ export default function MyShopping() {
             ) : (
                 <>
                     {purchases ? (
-                        <Emptyproducts />
+                        <Orders orders={purchases} />
                         // <ProductsViewGrid products={purchases} />
                     ) : (
                         <Emptyproducts />

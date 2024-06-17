@@ -1,96 +1,41 @@
 "use client"
 import * as React from 'react';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 import AddressForm from './AddressForm';
 import getCheckoutTheme from './getCheckoutTheme';
-import Info from './Info';
-import InfoMobile from './InfoMobile';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import ToggleColorMode from './ToggleColorMode';
-
-interface ToggleCustomThemeProps {
-  showCustomTheme: Boolean;
-  toggleCustomTheme: () => void;
-}
-
-function ToggleCustomTheme({
-  showCustomTheme,
-  toggleCustomTheme,
-}: ToggleCustomThemeProps) {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '100dvw',
-        position: 'fixed',
-        bottom: 24,
-      }}
-    >
-      <ToggleButtonGroup
-        color="primary"
-        exclusive
-        value={showCustomTheme}
-        onChange={toggleCustomTheme}
-        aria-label="Platform"
-        sx={{
-          backgroundColor: 'background.default',
-          '& .Mui-selected': {
-            pointerEvents: 'none',
-          },
-        }}
-      >
-        <ToggleButton value>
-          <AutoAwesomeRoundedIcon sx={{ fontSize: '20px', mr: 1 }} />
-          Custom theme
-        </ToggleButton>
-        <ToggleButton value={false}>Material Design 2</ToggleButton>
-      </ToggleButtonGroup>
-    </Box>
-  );
-}
+import Link from 'next/link';
+import usePurchasesStore from '@/stores/usePurchasesStorage';
+import Map from './Map';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-const logoStyle = {
-  width: '140px',
-  height: '56px',
-  marginLeft: '-4px',
-  marginRight: '-8px',
-};
-
-function getStepContent(step: number) {
+function getStepContent(step: number, handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, formData: any) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm handleInputChange={handleInputChange} />;
     case 1:
-      return <PaymentForm />;
+      return <PaymentForm formData={formData} handleInputChange={handleInputChange} />;
     case 2:
-      return <Review />;
+      return <Review formData={formData} />;
     default:
       throw new Error('Unknown step');
   }
@@ -102,13 +47,31 @@ export default function Checkout() {
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
+  const { postPurchase } = usePurchasesStore();
+
+  const [formData, setFormData] = React.useState({
+    firstName: '',
+    lastName: '',
+    street: '',
+    references: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+    paymentType: 'creditCard',
+    cardNumber: '',
+    cvv: '',
+    expirationDate: '',
+    colony: "colombia",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  const toggleCustomTheme = () => {
-    setShowCustomTheme((prev) => !prev);
   };
 
   const handleNext = () => {
@@ -119,6 +82,19 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const handlePostPurchase = () => {
+    const example = {
+      "street": "Green St. 1456",
+      "colony": "Southwest",
+      "zipCode": 12345,
+      "city": "USA",
+      "references": "Some references"
+    }
+    console.log('postPurchase', formData)
+    postPurchase(formData);
+    handleNext()
+  };
+
   return (
     <ThemeProvider theme={showCustomTheme ? checkoutTheme : defaultTheme}>
       <CssBaseline />
@@ -127,7 +103,7 @@ export default function Checkout() {
           item
           xs={12}
           sm={5}
-          lg={4}
+          lg={2.5}
           sx={{
             display: { xs: 'none', md: 'flex' },
             flexDirection: 'column',
@@ -150,36 +126,18 @@ export default function Checkout() {
             <Button
               startIcon={<ArrowBackRoundedIcon />}
               component="a"
-              href={-1}
+              href={'/products'}
               sx={{ ml: '-8px' }}
             >
               Back to
-              {/* <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
-                style={logoStyle}
-                alt="Sitemark's logo"
-              /> */}
             </Button>
           </Box>
-          {/* <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              flexGrow: 1,
-              width: '100%',
-              maxWidth: 500,
-            }}
-          >
-            <Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
-          </Box> */}
         </Grid>
         <Grid
           item
           sm={12}
           md={7}
-          lg={8}
+          lg={9.5}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -212,17 +170,10 @@ export default function Checkout() {
               <Button
                 startIcon={<ArrowBackRoundedIcon />}
                 component="a"
-                href={-1}
+                href={'/products'}
                 sx={{ alignSelf: 'start' }}
               >
                 Back to
-                {/* <img
-                  src={
-                    'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                  }
-                  style={logoStyle}
-                  alt="Sitemark's logo"
-                /> */}
               </Button>
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
             </Box>
@@ -259,32 +210,6 @@ export default function Checkout() {
               </Stepper>
             </Box>
           </Box>
-          {/* <Card
-            sx={{
-              display: { xs: 'flex', md: 'none' },
-              width: '100%',
-            }}
-          >
-            <CardContent
-              sx={{
-                display: 'flex',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                ':last-child': { pb: 2 },
-              }}
-            >
-              <div>
-                <Typography variant="subtitle2" gutterBottom>
-                  Selected products
-                </Typography>
-                <Typography variant="body1">
-                  {activeStep >= 2 ? '$144.97' : '$134.98'}
-                </Typography>
-              </div>
-              <InfoMobile totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
-            </CardContent>
-          </Card> */}
           <Box
             sx={{
               display: 'flex',
@@ -325,22 +250,25 @@ export default function Checkout() {
                 <Typography variant="h5">Thank you for your order!</Typography>
                 <Typography variant="body1" color="text.secondary">
                   Your order number is
-                  <strong>&nbsp;#140396</strong>. We have emailed your order
+                  We have emailed your order
                   confirmation and will update you once its shipped.
                 </Typography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    alignSelf: 'start',
-                    width: { xs: '100%', sm: 'auto' },
-                  }}
-                >
-                  Go to my orders
-                </Button>
+                <Link href={'/user/myshopping'}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      alignSelf: 'start',
+                      width: { xs: '100%', sm: 'auto' },
+                    }}
+                  >
+                    Go to my orders
+                  </Button>
+                </Link>
+                {/* <Map isOpen={activeStep === steps.length} direccion_destinatario={[formData.city + ' ' + formData.street]} direccion_remitente='bogota' /> */}
               </Stack>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, handleInputChange, formData)}
                 <Box
                   sx={{
                     display: 'flex',
@@ -382,7 +310,7 @@ export default function Checkout() {
                   <Button
                     variant="contained"
                     endIcon={<ChevronRightRoundedIcon />}
-                    onClick={handleNext}
+                    onClick={activeStep === steps.length - 1 ? handlePostPurchase : handleNext}
                     sx={{
                       width: { xs: '100%', sm: 'fit-content' },
                     }}
@@ -395,10 +323,6 @@ export default function Checkout() {
           </Box>
         </Grid>
       </Grid>
-      {/* <ToggleCustomTheme
-        toggleCustomTheme={toggleCustomTheme}
-        showCustomTheme={showCustomTheme}
-      /> */}
     </ThemeProvider>
   );
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { useEffect } from 'react';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
@@ -7,31 +7,73 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import useCartStore from '@/stores/useCartStorage';
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type:', detail: 'Visa' },
-  { name: 'Card holder:', detail: 'Mr. John Smith' },
-  { name: 'Card number:', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date:', detail: '04/2024' },
-];
+interface PaymentFormProps {
+  formData: {
+    firstName: string;
+    lastName: string;
+    street: string;
+    references: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+    paymentType: string;
+    cardNumber: string;
+    cvv: string;
+    expirationDate: string;
+  };
+}
 
-export default function Review() {
+export default function Review({ formData }: PaymentFormProps) {
+  const { cart, getCart, loading } = useCartStore();
+
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
+
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2);
+  };
+
+  const getTotalItems = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  if (loading) {
+    return (
+      <Stack spacing={2} sx={{ alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Typography variant="h6">Loading...</Typography>
+      </Stack>
+    );
+  }
+
+  const address = `${formData.street}, ${formData.references}, ${formData.city}, ${formData.state}, ${formData.zipCode}, ${formData.country}`;
+  const payments = [
+    { name: 'Card type:', detail: 'Visa' }, // Assuming Visa as a placeholder, this should come from formData
+    { name: 'Card holder:', detail: `${formData.firstName} ${formData.lastName}` },
+    { name: 'Card number:', detail: `xxxx-xxxx-xxxx-${formData.cardNumber.slice(-4)}` },
+    { name: 'Expiry date:', detail: formData.expirationDate },
+  ];
+
   return (
     <Stack spacing={2}>
       <List disablePadding>
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Products" secondary="4 selected" />
-          <Typography variant="body2">$134.98</Typography>
-        </ListItem>
+        {cart.map((item) => (
+          <ListItem key={item.id} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={item.product.title} secondary={`Quantity: ${item.quantity}`} />
+            <Typography variant="body2">{(item.product.price * item.quantity).toFixed(2)} USD</Typography>
+          </ListItem>
+        ))}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Shipping" secondary="Plus taxes" />
-          <Typography variant="body2">$9.99</Typography>
+          <Typography variant="body2">9.99 USD</Typography>
         </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $144.97
+            {getTotalPrice()} USD
           </Typography>
         </ListItem>
       </List>
@@ -46,9 +88,9 @@ export default function Review() {
           <Typography variant="subtitle2" gutterBottom>
             Shipment details
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
+          <Typography gutterBottom>{`${formData.firstName} ${formData.lastName}`}</Typography>
           <Typography color="text.secondary" gutterBottom>
-            {addresses.join(', ')}
+            {address}
           </Typography>
         </div>
         <div>

@@ -19,6 +19,7 @@ const usePurchasesStore = create<purchasesStore>((set) => ({
     set({ loading: true });
     axios.get("/purchases", getConfig())
       .then((res) => {
+        console.log(res);
         set({purchases: res.data.purchases})
         enqueueSnackbar(res.statusText, { variant: "success" });
       })
