@@ -8,9 +8,7 @@ export default function Home() {
     const { products, fetchData } = useProductsStore();
 
     useEffect(() => {
-        if (products.length === 0) {
-            fetchData()
-        }
+        fetchData()
     }, []);
 
     return (
