@@ -55,7 +55,7 @@ function StepperGallery({ images }) {
     };
 
     return (
-        <Box sx={{ maxWidth: 650, flexGrow: 1 }}>
+        <Box sx={{ maxWidth: 600,minWidth: 600, flexGrow: 1 }}>
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
@@ -65,8 +65,8 @@ function StepperGallery({ images }) {
                 {images.map((step, index) => (
                     <div key={step.altText}>
                         {Math.abs(activeStep - index) <= 2 ? (
-                            <Box  >
-                                <Image
+                            <Box sx={{ pt: '100%', position: 'relative' }}>
+                                {/* <Image
                                     src={step.src as string}
                                     alt={step.altText as string}
                                     //priority={true}
@@ -75,6 +75,18 @@ function StepperGallery({ images }) {
                                     //layout="responsive"
                                     objectFit='cover'
                                     style={{ borderRadius: '15px' }}
+                                /> */}
+                                <Box
+                                    component="img"
+                                    src={step.src as string}
+                                    alt={step.altText as string}
+                                    sx={{
+                                        top: 0,
+                                        width: 1,
+                                        height: 1,
+                                        objectFit: 'contain',
+                                        position: 'absolute',
+                                    }}
                                 />
                             </Box>
                         ) : null}
