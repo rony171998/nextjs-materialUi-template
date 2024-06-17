@@ -78,6 +78,7 @@ export const AddProduct = ({ ...others }) => {
     }
 
     postProduct(formData);
+
   };
 
   return (
@@ -215,7 +216,7 @@ export const AddProduct = ({ ...others }) => {
                   onBlur={handleBlur}
                   InputProps={{
                     inputProps: {
-                      accept: 'image/*'
+                      accept: 'image/png'
                     },
                     startAdornment: <AttachFileIcon />
                   }}
