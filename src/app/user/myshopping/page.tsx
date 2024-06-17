@@ -20,7 +20,8 @@ export default function MyShopping() {
             ) : (
                 <>
                     {purchases ? (
-                        <ProductsViewGrid products={purchases} />
+                        <Emptyproducts />
+                        // <ProductsViewGrid products={purchases} />
                     ) : (
                         <Emptyproducts />
                     )}
