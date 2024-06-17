@@ -139,7 +139,7 @@ function Gallery({ images }) {
                         priority={true}
                         width={500}
                         height={500}
-                    //layout="responsive"
+                        layout="responsive"
                     />
                 )}
             </Box>
