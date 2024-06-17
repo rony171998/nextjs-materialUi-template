@@ -87,7 +87,7 @@ export const AddProduct = ({ ...others }) => {
         description: '',
         price: '',
         quantity: '',
-        categoryId: '',
+        categoryId: '1',
         productImg: []
       }}
       validationSchema={Yup.object().shape({
@@ -178,7 +178,7 @@ export const AddProduct = ({ ...others }) => {
                 )}
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControl fullWidth error={Boolean(touched.categoryId && errors.categoryId)}>
                 <InputLabel htmlFor="categoryId">Category</InputLabel>
                 <OutlinedInput
@@ -192,7 +192,7 @@ export const AddProduct = ({ ...others }) => {
                   <FormHelperText error>{errors.categoryId}</FormHelperText>
                 )}
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <FormControl fullWidth error={Boolean(touched.productImg && errors.productImg)}>
                 {/* <InputLabel htmlFor="productImg">Product Image(s)</InputLabel> */}

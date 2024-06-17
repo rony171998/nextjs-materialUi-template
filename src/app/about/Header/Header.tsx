@@ -1,5 +1,6 @@
 'use client'
 import PropTypes from "prop-types";
+import NextLink from 'next/link';
 
 // material-ui
 import { useTheme } from "@mui/material/styles";
@@ -13,10 +14,13 @@ import NotificationSection from "./NotificationSection/NotificationSection";
 // assets
 import { IconMenu2, IconSearch } from "@tabler/icons-react";
 import { useCustomizationStore } from "@/providers/customization-store-provider";
+import Link from "next/link";
+import { useState } from "react";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = () => {
+    const [valueSearch, setValueSearch] = useState('')
     const theme = useTheme();
     const leftDrawerOpened = useCustomizationStore((state) => state.opened)
     const setOpenedMenu = useCustomizationStore((state) => state.setMenu)
@@ -63,12 +67,21 @@ const Header = () => {
             </Box>
             <OutlinedInput
                 sx={{ width: '30%', mx: '30%' }}
-                //value={value}
-                //onChange={(e) => setValue(e.target.value)}
+                value={valueSearch}
+                onChange={(e) => setValueSearch(e.target.value)}
                 placeholder="Search profile options"
-                startAdornment={
+                endAdornment={
                     <InputAdornment position="start">
-                        <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                        <Link
+                            component={NextLink}
+                            href={valueSearch == '' ? '/products' : `/search/${valueSearch}`}
+                            color="inherit"
+                            underline="hover"
+                            variant="subtitle2"
+                            noWrap
+                        >
+                            <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                        </Link>
                     </InputAdornment>
                 }
             />

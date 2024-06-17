@@ -165,7 +165,8 @@ const useProductsStore = create<productsStore>((set) => ({
     set({ loading: true });
     axios.get("/products")
       .then(res => {
-        const productsSearched = res.data.data.products.filter(
+        console.log(res)
+        const productsSearched = res.data.products.filter(
           productsItem => productsItem.title.toLowerCase().includes(name.toLowerCase())
         );
         set({ products: productsSearched });
