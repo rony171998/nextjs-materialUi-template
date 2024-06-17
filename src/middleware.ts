@@ -4,7 +4,7 @@ export default withAuth({
   // Matches the pages config in `[...nextauth]`
   pages: {
     signIn: "/auth/login",
-    error: "/error",
+    error: "/auth/login",
   },
 })
-export const config = { matcher: ["/dashboard", '/user'] }
+export const config = { matcher: ["/dashboard"] }
