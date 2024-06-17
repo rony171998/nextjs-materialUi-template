@@ -25,6 +25,7 @@ import ToggleColorMode from './ToggleColorMode';
 import Link from 'next/link';
 import usePurchasesStore from '@/stores/usePurchasesStorage';
 import Map from './Map';
+import useCartStore from '@/stores/useCartStorage';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -48,6 +49,7 @@ export default function Checkout() {
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
   const { postPurchase } = usePurchasesStore();
+  const { getCart } = useCartStore();
 
   const [formData, setFormData] = React.useState({
     firstName: '',
@@ -90,9 +92,10 @@ export default function Checkout() {
       "city": "USA",
       "references": "Some references"
     }
-    console.log('postPurchase', formData)
     postPurchase(formData);
+    console.log('postPurchase', formData)
     handleNext()
+    getCart()
   };
 
   return (
