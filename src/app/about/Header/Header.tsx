@@ -74,7 +74,7 @@ const Header = () => {
                     <InputAdornment position="start">
                         <Link
                             component={NextLink}
-                            href={valueSearch == '' ? '/products' : `/search/${valueSearch}`}
+                            href={valueSearch == '' ? '/search/1' : `/search/${valueSearch}`}
                             color="inherit"
                             underline="hover"
                             variant="subtitle2"

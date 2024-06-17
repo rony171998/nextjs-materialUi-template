@@ -34,13 +34,10 @@ const StyledRoot = styled(Box)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
-  const openedCart = useCustomizationStore(state => state.openedCart);
   const setMenuCart = useCustomizationStore(state => state.setMenuCart);
   const { cart, getCart } = useCartStore()
 
   useEffect(() => getCart(), [])
-
-  console.log(cart)
 
   return (
     <StyledRoot onClick={() => setMenuCart(true)}>

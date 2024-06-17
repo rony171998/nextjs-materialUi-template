@@ -150,7 +150,7 @@ export default function Checkout() {
             <Button
               startIcon={<ArrowBackRoundedIcon />}
               component="a"
-              href="/material-ui/getting-started/templates/landing-page/"
+              href={-1}
               sx={{ ml: '-8px' }}
             >
               Back to
@@ -163,7 +163,7 @@ export default function Checkout() {
               /> */}
             </Button>
           </Box>
-          <Box
+          {/* <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -173,7 +173,7 @@ export default function Checkout() {
             }}
           >
             <Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
-          </Box>
+          </Box> */}
         </Grid>
         <Grid
           item
@@ -212,17 +212,17 @@ export default function Checkout() {
               <Button
                 startIcon={<ArrowBackRoundedIcon />}
                 component="a"
-                href="/material-ui/getting-started/templates/landing-page/"
+                href={-1}
                 sx={{ alignSelf: 'start' }}
               >
                 Back to
-                <img
+                {/* <img
                   src={
                     'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
                   }
                   style={logoStyle}
                   alt="Sitemark's logo"
-                />
+                /> */}
               </Button>
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
             </Box>
@@ -259,7 +259,7 @@ export default function Checkout() {
               </Stepper>
             </Box>
           </Box>
-          <Card
+          {/* <Card
             sx={{
               display: { xs: 'flex', md: 'none' },
               width: '100%',
@@ -284,7 +284,7 @@ export default function Checkout() {
               </div>
               <InfoMobile totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
             </CardContent>
-          </Card>
+          </Card> */}
           <Box
             sx={{
               display: 'flex',

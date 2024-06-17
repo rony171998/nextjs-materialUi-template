@@ -119,7 +119,6 @@ const useProductsStore = create<productsStore>((set) => ({
     set({ loading: true });
     axios.delete(`/products/${id}`, getConfig())
       .then(response => {
-        console.log(response); // Puedes modificar esto según tus necesidades
         enqueueSnackbar(response.statusText, { variant: "success" }); // Asumiendo que swal está disponible en este contexto
       })
       .catch(error => {

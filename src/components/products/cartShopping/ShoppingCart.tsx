@@ -19,8 +19,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import useCartStore from '@/stores/useCartStorage';
 import { IconRefresh } from '@tabler/icons-react';
 import Link from 'next/link';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import { useCustomizationStore } from '@/providers/customization-store-provider';
 
 const ShoppingCart = () => {
+    const setMenuCart = useCustomizationStore(state => state.setMenuCart);
     const { cart, getCart, loading, deleteProductFromCart, patchProductToCart } = useCartStore();
 
     useEffect(() => {
@@ -65,6 +68,9 @@ const ShoppingCart = () => {
     return (
         <Container>
             <Stack direction={'row'} spacing={2} mt={3}>
+                <IconButton aria-label="" onClick={() => setMenuCart(false)}>
+                    <ArrowCircleLeftIcon />
+                </IconButton>
                 <Typography variant="h4" gutterBottom>
                     Shopping Cart
                 </Typography>
