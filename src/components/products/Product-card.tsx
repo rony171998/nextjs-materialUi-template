@@ -40,26 +40,30 @@ export default function ShopProductCard(props: Props) {
 
   return (
     <Card sx={{ maxWidth: 300, m: 'auto' }}>
-      <Box sx={{ pt: '100%', position: 'relative' }}>
-        {product.status && renderStatus}
-        <Box
-          component="img"
-          alt={product.title}
-          src={
-            product.productImgs.length
-              ? product.productImgs[0]?.imgUrl
-              : '/assets/images/imagenotfound.png'
-          }
-          sx={{
-            top: 0,
-            width: 1,
-            height: 1,
-            objectFit: 'contain',
-            position: 'absolute',
-          }}
-        />
-      </Box>
-
+      <Link
+        component={NextLink}
+        href={`/products/${product.id}`}
+      >
+        <Box sx={{ pt: '100%', position: 'relative' }}>
+          {product.status && renderStatus}
+          <Box
+            component="img"
+            alt={product.title}
+            src={
+              product.productImgs.length
+                ? product.productImgs[0]?.imgUrl
+                : '/assets/images/imagenotfound.png'
+            }
+            sx={{
+              top: 0,
+              width: 1,
+              height: 1,
+              objectFit: 'contain',
+              position: 'absolute',
+            }}
+          />
+        </Box>
+      </Link>
       <Stack spacing={2} sx={{ p: 2 }}>
         <Link
           component={NextLink}
