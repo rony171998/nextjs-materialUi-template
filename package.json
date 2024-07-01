@@ -26,6 +26,8 @@
     "clsx": "^2.1.0",
     "formik": "^2.4.5",
     "framer-motion": "^11.0.23",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "leva": "^0.9.35",
     "lightbox.js-react": "^1.0.4",
     "lodash": "^4.17.21",

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { enqueueSnackbar } from 'notistack';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -19,24 +20,19 @@ type AuthStore = {
   loading: boolean;
 }
 
-// Obtener el token del localStorage solo si estamos en el entorno del navegador
-const getTokenFromLocalStorage = (): string | null => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('token');
-  }
-  return null;
+// Obtener el token de las cookies
+const getTokenFromCookies = (): string | null => {
+  return Cookies.get('token') || null;
 };
 
 const useAuthStore = create<AuthStore>((set) => ({
-  token: getTokenFromLocalStorage(),
+  token: getTokenFromCookies(),
   loading: false,
   login: async (credentials) => {
     set({ loading: true });
     axios.post('/users/login', credentials)
       .then((response) => {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem("token", response.data.token);
-        }
+        Cookies.set('token', response.data.token, { expires: 7 });
         set({ token: response.data.token });
         enqueueSnackbar('Login successful', { variant: 'success' });
       })
@@ -50,9 +46,7 @@ const useAuthStore = create<AuthStore>((set) => ({
     set({ loading: true });
     axios.post('/users', userData)
       .then((response) => {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem("token", response.data.token);
-        }
+        Cookies.set('token', response.data.token, { expires: 7 });
         set({ token: response.data.token });
         enqueueSnackbar('Signup successful', { variant: 'success' });
       })
@@ -63,12 +57,9 @@ const useAuthStore = create<AuthStore>((set) => ({
       .finally(() => set({ loading: false }));
   },
   logout: () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('token');
-    }
+    Cookies.remove('token');
     set({ token: null });
   }
 }));
 
 export default useAuthStore;
-
