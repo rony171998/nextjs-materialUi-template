@@ -49,6 +49,7 @@ export type User = {
 
 type productsStore = {
   products: Product[] | [],
+  productId: Product | null,
   myproducts: User | null,
   loading: boolean,
   fetchData: () => void,
@@ -64,6 +65,7 @@ type productsStore = {
 
 const useProductsStore = create<productsStore>((set) => ({
   products: [],
+  productId: null,
   myproducts: null,
   loading: false,
   fetchData: async () => {
@@ -81,7 +83,7 @@ const useProductsStore = create<productsStore>((set) => ({
     axios.get('/products/' + id)
       .then((response) => {
         console.log(response)
-        set({ products: response.data.products })
+        set({ productId: response.data.products })
       })
       .catch((error) => {
         console.error('Error fetching data:', error);

@@ -1,7 +1,5 @@
 'use client'
-import { products as productss } from '@/components/_mock/products';
 import ColorPreview from '@/components/color-utils/color-preview';
-import Footer from '@/components/Footer';
 import { GridTileImage } from '@/components/tile';
 import { fCurrency } from '@/components/utils/format-number';
 import { Box, Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
@@ -21,19 +19,21 @@ import Emptyproducts from '@/components/products/EmptyProducts';
 export default function ProductPage() {
     const pathname = usePathname()
     const parts = pathname.split('/');
-    const productId = parts[parts.length - 1];
+    const paramId = parts[parts.length - 1];
 
-    const { products, fetchData, loading } = useProductsStore()
+    const { products, productId , getProductById, fetchData, loading } = useProductsStore()
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [fetchData])
 
-    const product = products.find(product => product.id == productId)
+    useEffect(() => {
+        getProductById(paramId)
+    }, [getProductById ,paramId])
 
-    const images = product?.productImgs.map(imageProduct => ({
+    const images = productId?.productImgs.map(imageProduct => ({
         src: imageProduct.imgUrl,
-        altText: product.title
+        altText: productId.title
     }))
 
     return (
@@ -42,11 +42,11 @@ export default function ProductPage() {
                 <div>Loading...</div> // Aquí puedes usar cualquier tipo de indicador de carga que desees
             ) : (
                 <>
-                    {product ? (
+                    {productId? (
                         <>
                             <Stack direction={'row'} spacing={3} mt={10}>
                                 <StepperGallery images={images} />
-                                <ProductDescription product={product} />
+                                <ProductDescription product={productId} />
                             </Stack>
 
                             <RelatedProducts relatedProducts={products} />
