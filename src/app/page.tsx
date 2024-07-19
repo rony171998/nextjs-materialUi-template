@@ -9,6 +9,9 @@ import Emptyproducts from '@/components/products/EmptyProducts';
 import { AppBar, Grid, Toolbar } from '@mui/material';
 import Header from './about/Header/Header';
 import Sidebar from './about/Sidebar/sidebar';
+import { CardGlass, Glass } from '@/themes/glassStyle';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import Error from './error';
 
 export default function Home() {
   const { products, fetchData, loading } = useProductsStore();
@@ -33,30 +36,35 @@ export default function Home() {
       </AppBar>
       {/* drawer */}
       <Sidebar />
-      <Container maxWidth="xl" sx={{ mt: 10 }}>
-        <StepperGalleryPromos />
-        <Grid container spacing={2}>
-          {products.length ? (
-            <>
-              <Grid item lg={4}>
-                <StepperGalleryPromosProducts products={products} />
+      <Container maxWidth='xl'>
+        <Glass>
+          <CardGlass>
+            <ErrorBoundary fallback={<Error />}>
+              <StepperGalleryPromos />
+              <Grid container spacing={2}>
+                {products.length ? (
+                  <>
+                    <Grid item lg={4}>
+                      <StepperGalleryPromosProducts products={products} />
+                    </Grid>
+                    <Grid item lg={4}>
+                      <StepperGalleryPromosProducts products={products} />
+                    </Grid>
+                    <Grid item lg={4}>
+                      <StepperGalleryPromosProducts products={products} />
+                    </Grid>
+                  </>
+                ) : (
+                  <Grid item xs={12}>
+                    <Emptyproducts />
+                  </Grid>
+                )}
               </Grid>
-              <Grid item lg={4}>
-                <StepperGalleryPromosProducts products={products} />
-              </Grid>
-              <Grid item lg={4}>
-                <StepperGalleryPromosProducts products={products} />
-              </Grid>
-            </>
-          ) : (
-            <Grid item xs={12}>
-              <Emptyproducts />
-            </Grid>
-          )}
-        </Grid>
+            </ErrorBoundary>
+          </CardGlass>
+        </Glass>
       </Container>
       <Footer />
     </>
-
   );
 }
